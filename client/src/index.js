@@ -8,6 +8,5 @@ const App = Loadable({
   loading: () => <div>Loading</div>,
 });
 
-
 const root = document.querySelector('#app')
 ReactDOM.render(<App />, root)
