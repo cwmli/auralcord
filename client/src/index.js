@@ -1,12 +1,19 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
-import './index.css'
+import { BrowserRouter } from 'react-router-dom'; 
+
+import Loading from './components/public/loading';
+import './index.css';
 
 const App = Loadable({
   loader: () => import(/* webpackChunkName: "app" */'./App.js'),
-  loading: () => <div>Loading</div>,
+  loading: () => <Loading />,
 });
 
 const root = document.querySelector('#app')
-ReactDOM.render(<App />, root)
+ReactDOM.render((
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+), root)
