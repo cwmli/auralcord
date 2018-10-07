@@ -7,7 +7,7 @@ import Loading from './components/public/loading';
 import './index.css';
 
 const App = Loadable({
-  loader: () => import(/* webpackChunkName: "app" */'./App.js'),
+  loader: () => import(/* webpackChunkName: "app" */'./App/App'),
   loading: () => <Loading />,
 });
 
