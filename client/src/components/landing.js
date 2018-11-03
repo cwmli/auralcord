@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import { Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
 
@@ -10,7 +12,7 @@ class Landing extends Component {
           <div className="dtc v-mid tc black ph3 ph4-l">
             <h1 className="f6 f2-m f-subheadline-l fw6 tc mb1">SPOTLIST</h1>
             <h2 className="fw1 f4 black-80">Spotify infographic profile data</h2>
-            <Link className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-blue white" to="/profile">Link Account</Link>
+            <Link className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-green black" to="/profile">Sign In With <FontAwesomeIcon icon={faSpotify} /></Link>
           </div>
         </div>
         <Particles 

@@ -1,1 +1,42 @@
 @import "tachyons";
+
+// Global colors
+.theme-red {
+  color: #FF355B;
+}
+
+.theme-green {
+  color: #B7E876;
+}
+
+.theme-yellow {
+  color: #FFC251;
+}
+
+.theme-blue {
+  color: #76D4FF;
+}
+
+.theme-gray {
+  color: #C2C8D7;
+}
+
+.bg-theme-red {
+  background-color: #FF355B;
+}
+
+.bg-theme-green {
+  background-color: #B7E876;
+}
+
+.bg-theme-yellow {
+  background-color: #FFC251;
+}
+
+.bg-theme-blue {
+  background-color: #76D4FF;
+}
+
+.bg-theme-gray {
+  background-color: #C2C8D7;
+}
