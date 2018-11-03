@@ -16,7 +16,7 @@ function routeBuilder(routeObj) {
       path={routeObj.path} 
       exact={routeObj.isExact}  
       render={props => (
-        <routeObj.component {...props} routes={routeObj.routes} />
+        <routeObj.layout yield={<routeObj.component {...props} routes={routeObj.routes} />} />
       )}
     />)
 }
