@@ -8,11 +8,13 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <div className="absolute bg-white tc" style={{left: "50%", top: "30%", margin: "0 0 0 -226px"}}>
+        <div className="absolute bg-white tc" style={{left: "50%", top: "30%", margin: "0 0 0 -288.5px"}}>
           <div className="dtc v-mid tc black ph3 ph4-l">
-            <h1 className="f6 f2-m f-subheadline-l fw6 tc mb1">SPOTLIST</h1>
-            <h2 className="fw1 f4 black-80">Spotify infographic profile data</h2>
-            <Link className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-green black" to="/profile">Sign In With <FontAwesomeIcon icon={faSpotify} /></Link>
+            <h1 className="f6 f2-m f-subheadline-l fw6 tc mb1">AURALCORD</h1>
+            <h2 className="fw1 f4 black-80">
+              <img className="h1" src={ require('../images/spotify_logo.png') } />&nbsp;infographic profile data
+            </h2>
+            <Link className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-blue white" to="/profile">Sign in with <FontAwesomeIcon icon={faSpotify} /></Link>
           </div>
         </div>
         <Particles 

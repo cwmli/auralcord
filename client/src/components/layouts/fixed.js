@@ -6,7 +6,7 @@ class FixedLayout extends Component {
       <div className="h-100">
         <nav className="fixed w-100 top-0 flex justify-between bg-white bb b--near-white">
           <a className="link fw6 black-70 dim flex items-center pa3" href="">
-            SPOTLIST
+            AURALCORD
           </a>
         </nav>
         {this.props.yield}
