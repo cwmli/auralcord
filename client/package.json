@@ -1,5 +1,5 @@
 {
-  "name": "spotlist-client",
+  "name": "auralcord-client",
   "version": "0.0.0",
   "description": "Spotify demographic data and playlist analytics",
   "proxy": "http://localhost:5000",
