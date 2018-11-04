@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
-import { Link } from 'react-router-dom';
 import Particles from 'react-particles-js';
+import Settings from '../../config/settings';
 
 class Landing extends Component {
   render() {
@@ -14,7 +14,7 @@ class Landing extends Component {
             <h2 className="fw1 f4 black-80">
               <img className="h1" src={ require('../images/spotify_logo.png') } />&nbsp;infographic profile data
             </h2>
-            <Link className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-blue white" to="/profile">Sign in with <FontAwesomeIcon icon={faSpotify} /></Link>
+            <a className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-blue white" href={Settings.AURALCORD_ENDPOINT + "signin"}>Sign in with <FontAwesomeIcon icon={faSpotify} /></a>
           </div>
         </div>
         <Particles 
