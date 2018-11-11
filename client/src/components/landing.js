@@ -8,7 +8,7 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <div className="absolute bg-white tc" style={{left: "50%", top: "30%", margin: "0 0 0 -288.5px"}}>
+        <div className="absolute bg-transparent tc" style={{left: "50%", top: "30%", margin: "0 0 0 -288.5px"}}>
           <div className="dtc v-mid tc black ph3 ph4-l">
             <h1 className="f6 f2-m f-subheadline-l fw6 tc mb1">AURALCORD</h1>
             <h2 className="fw1 f4 black-80">
