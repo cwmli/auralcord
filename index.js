@@ -1,9 +1,6 @@
 require('babel-register')({
   presets: ['env'],
 });
-require.extensions['.css'] = () => {
-  return;
-};
 require.extensions['.png'] = () => {
   return;
 };

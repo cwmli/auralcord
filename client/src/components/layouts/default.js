@@ -11,7 +11,7 @@ class DefaultLayout extends Component {
         </nav>
         {this.props.yield}
         <footer className="flex pv4 ph2 mid-gray bg-white items-center">
-          <small className="f6 db tc w-100">See me on <a className="link dim" href=""><b class="ttu">Github</b></a>.</small>
+          <small className="f6 db tc w-100">See me on <a className="link dim" href=""><b className="ttu">Github</b></a>.</small>
         </footer>
       </div>
     )
