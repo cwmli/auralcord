@@ -10,6 +10,7 @@
     "react",
     "jest"
   ],
+  "plugins": ["syntax-dynamic-import"],
   "env": {
     "test": {
       "presets": [
