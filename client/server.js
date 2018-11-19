@@ -5,6 +5,9 @@ import path from "path";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
+import Loadable from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack'
+import stats from './public/loadable-bundleinfo.json';
 import App from './src/App/App';
 
 const app = express()
@@ -13,21 +16,28 @@ const app = express()
 
 const port = process.env.PORT || 8080;
 
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
+  let modules = [];
   const context = { };
+
   const jsx = ( 
     <StaticRouter context={context} location={req.url}>
-      <App />
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <App />
+      </Loadable.Capture>
     </StaticRouter>);
   const reactDom = renderToString(jsx);
 
+  let bundles = getBundles(stats, modules);
   res.writeHead( 200, { "Content-Type": "text/html" } );
-  res.end( htmlTemplate( reactDom ) );
+  res.end( htmlTemplate(reactDom, bundles) );
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+Loadable.preloadAll().then(() => {
+  app.listen(port, () => console.log(`Listening on port ${port}`));
+})
 
-function htmlTemplate( reactDom ) {
+function htmlTemplate(reactDom, bundles) {
   return `
       <!DOCTYPE html>
       <html>
@@ -39,6 +49,9 @@ function htmlTemplate( reactDom ) {
       
       <body>
         <div id="app" class="sans-serif">${reactDom}</div>
+        ${bundles.map(bundle => {
+          return `<script src="${bundle.file}"></script>`
+        }).join('\n')}
         <script src="bundle.js"></script>
       </body>
       </html>

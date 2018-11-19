@@ -1,3 +1,4 @@
+const ReactLoadableWebpack = require('react-loadable/webpack');
 const path = require('path')
 
 module.exports = {
@@ -19,7 +20,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.js$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: [
           {
@@ -43,4 +44,9 @@ module.exports = {
       }  
     ],
   },
+  plugins: [
+    new ReactLoadableWebpack.ReactLoadablePlugin({
+      filename: './client/public/loadable-bundleinfo.json',
+    })
+  ]
 }

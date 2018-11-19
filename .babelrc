@@ -10,7 +10,7 @@
     "react",
     "jest"
   ],
-  "plugins": ["syntax-dynamic-import"],
+  "plugins": ["syntax-dynamic-import", "react-loadable/babel"],
   "env": {
     "test": {
       "presets": [
