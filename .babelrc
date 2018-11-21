@@ -1,24 +1,6 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "modules": false,
-        "useBuiltIns": "usage"
-      }
-    ],
-    "react",
-    "jest"
-  ],
-  "plugins": ["syntax-dynamic-import", "react-loadable/babel"],
-  "env": {
-    "test": {
-      "presets": [
-        "react"
-      ],
-      "plugins": [
-        "transform-es2015-modules-commonjs"
-      ]
-    }
-  }
+    "env",
+    "react"
+  ]
 }

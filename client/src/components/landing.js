@@ -12,7 +12,7 @@ class Landing extends Component {
           <div className="dtc v-mid tc black ph3 ph4-l">
             <h1 className="f6 f2-m f-subheadline-l fw6 tc mb1">AURALCORD</h1>
             <h2 className="fw1 f4 black-80">
-              <img className="h1" src={ require('../images/spotify_logo.png') } />&nbsp;infographic profile data
+              {/* <img className="h1" src={ require('../images/spotify_logo.png') } />&nbsp;infographic profile data */}
             </h2>
             <a className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-blue white" href={Settings.AURALCORD_ENDPOINT + "signin"}>Sign in with <FontAwesomeIcon icon={faSpotify} /></a>
           </div>
