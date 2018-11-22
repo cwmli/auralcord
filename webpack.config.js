@@ -19,7 +19,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'css-loader/locals'
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       },
       {
         test: /\.(svg|png)$/,
