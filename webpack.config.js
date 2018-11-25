@@ -26,11 +26,7 @@ module.exports = {
       },
       {
         test: /\.(svg|png)$/,
-        loader: 'file-loader?emitFile=false'
-      },
-      {
-        test: /\.(woff|woff2)$/,
-        loader: 'url-loader?emitFile=false'
+        loader: 'file-loader'
       }
     ]
   }
