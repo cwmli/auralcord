@@ -5,11 +5,11 @@ import path from "path";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
-import App from '../client/src/App/App';
+import App from '../src/App/App';
 
 const app = express()
           .use(compression())
-          .use(express.static(path.resolve( __dirname, "./public")));
+          .use(express.static(path.resolve( __dirname, "../public")));
 
 const port = process.env.PORT || 8080;
 
@@ -34,6 +34,8 @@ function htmlTemplate(reactDom) {
       <html>
       <head>
           <meta charset="utf-8">
+          <link rel="stylesheet" type="text/css" href="index.css">
+          <link href="https://use.fontawesome.com/releases/v5.5.0/css/svg-with-js.css" rel="stylesheet">
           <title>AURALCORD</title>
       </head>
       

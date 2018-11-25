@@ -4,13 +4,14 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "babel ./client ./server -d build",
-    "build:css": "tachyons ./client/src/css/App.css > ./client/src/css/index.css --minify",
-    "build:watch": "babel ./client ./server -d build --watch",
+    "build": "babel ./client -d build",
+    "build:css": "tachyons ./client/src/css/App.css > ./build/public/index.css --minify",
+    "build:watch": "babel ./client -d build --watch",
     "build:client": "webpack --config ./webpack.config.js/",
     "build:watch:client": "webpack --config ./webpack.config.js/ --watch",
     "build:prod": "npm run build && npm run build:client",
-    "start:dev": "concurrently 'npm run build:watch' 'npm run build:watch:client' 'nodemon --exec babel-node ./build/server.js'"
+    "start": "npm run build:prod && NODE_ENV=production node ./build/server/server.js",
+    "start:dev": "concurrently 'npm run build:watch' 'npm run build:watch:client' 'nodemon --exec babel-node ./build/server/server.js'"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
