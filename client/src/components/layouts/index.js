@@ -1,3 +1,5 @@
-export DefaultLayout from './default';
-export FixedLayout from './fixed';
+import DefaultLayout from './default';
+import FixedLayout from './fixed';
+
+export { DefaultLayout, FixedLayout };
 
