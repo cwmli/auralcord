@@ -13,6 +13,7 @@ class router extends Component {
 function routeBuilder(routeObj) {
   return (
     <Route 
+      key={routeObj.path}
       path={routeObj.path} 
       exact={routeObj.isExact}  
       render={props => (
