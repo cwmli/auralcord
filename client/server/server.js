@@ -1,5 +1,6 @@
 import compression from 'compression';
 import express from "express";
+import cookieParser from 'cookie-parser';
 import path from "path";
 
 import React from "react";
@@ -11,12 +12,13 @@ import { StaticRouter } from "react-router-dom";
 import App from '../src/App/App';
 
 const app = express()
+          .use(cookieParser())
           .use(compression())
           .use(express.static(path.resolve( __dirname, "../public")));
 
 const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   const store = createStore(auralcordApp);
   const context = { };
 

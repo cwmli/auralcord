@@ -16,7 +16,6 @@ function spotifyProfileAction(status, json = {}) {
   }
 }
 
-// TODO: ADD THUNK FOR THIS
 export function fetchSpotifyProfile() {
   return function(dispatch, getState) {
 
@@ -25,10 +24,18 @@ export function fetchSpotifyProfile() {
     if (!profile || profile.status == ERROR) {
       dispatch(spotifyProfileAction(PENDING));
 
-      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/profile')
+      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/profile', { credentials: 'include' })
         .then(
-          response => { dispatch(spotifyProfileAction(SUCCESS, response)) },
-          error => { dispatch(spotifyProfileAction(ERROR, error)) });
+          response => response.json(),
+          error => { dispatch(spotifyProfileAction(ERROR, error)) })
+        .then(
+          response => {
+            if (response.success) {
+              dispatch(spotifyProfileAction(SUCCESS, response.data)); 
+            } else {
+              dispatch(spotifyProfileAction(SUCCESS, response.message));
+            }
+          });
     } else {
       Promise.resolve();
     }
