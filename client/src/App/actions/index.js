@@ -27,13 +27,13 @@ export function fetchSpotifyProfile() {
       return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/profile', { credentials: 'include' })
         .then(
           response => response.json(),
-          error => { dispatch(spotifyProfileAction(ERROR, error)) })
+          error => error)
         .then(
           response => {
             if (response.success) {
               dispatch(spotifyProfileAction(SUCCESS, response.data)); 
             } else {
-              dispatch(spotifyProfileAction(SUCCESS, response.message));
+              dispatch(spotifyProfileAction(ERROR, response.message));
             }
           });
     } else {

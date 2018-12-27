@@ -9,16 +9,19 @@ function statusAction(state = {isFetching: false, data: {}}, action) {
   switch(action.status) {
     case PENDING:
       return Object.assign({}, state, {
+        succeeded: false,
         isFetching: true,
         data: {}
       })
     case SUCCESS:
       return Object.assign({}, state, {
+        succeeded: true,
         isFetching: false,
         data: action.json
       })
     case ERROR:
       return Object.assign({}, state, {
+        succeeded: false,
         isFetching: false,
         data: action.json
       })

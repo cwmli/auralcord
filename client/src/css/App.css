@@ -1,6 +1,5 @@
 @import "tachyons";
 
-// Global colors
 .theme-red {
   color: #FF355B;
 }
@@ -39,4 +38,8 @@
 
 .bg-theme-gray {
   background-color: #C2C8D7;
+}
+
+.vh-85 {
+  height: 85vh;
 }

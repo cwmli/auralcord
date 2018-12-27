@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 
+import Loading from './loaders/loading';
 import { fetchSpotifyProfile } from '../App/actions';
 
 function mapStateToProps(state) {
@@ -28,7 +29,7 @@ class ConnectedProfile extends Component {
       )
     } else {
       return (
-        <p>LOADING..</p>
+        <Loading />
       )
     }
   }
