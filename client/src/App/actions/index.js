@@ -24,7 +24,13 @@ export function fetchSpotifyProfile() {
     if (!profile || profile.status == ERROR) {
       dispatch(spotifyProfileAction(PENDING));
 
-      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/profile', { credentials: 'include' })
+      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/profile', 
+          { credentials: 'include', 
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
         .then(
           response => response.json(),
           error => error)
