@@ -1,5 +1,6 @@
 
 import fetch from 'cross-fetch';
+import queryString from 'query-string';
 
 import Settings from '../../../config/settings';
 // status based actions identifiers
@@ -8,23 +9,32 @@ export const PENDING = 'PENDING';
 export const ERROR = 'ERROR';
 
 export const FETCH_SPOTIFY_PROFILE = 'FETCH_SPOTIFY_PROFILE';
-function spotifyProfileAction(status, json = {}) {
+export const FETCH_SPOTIFY_TOP_ARTISTS = 'FETCH_SPOTIFY_TOP_ARTISTS';
+export const FETCH_SPOTIFY_TOP_TRACKS = 'FETCH_SPOTIFY_TOP_TRACKS';
+
+const SPOTIFY_ACTION_MAPPING = {
+  FETCH_SPOTIFY_PROFILE: 'spotify/profile',
+  FETCH_SPOTIFY_TOP_ARTISTS: 'spotify/top/artists',
+  FETCH_SPOTIFY_TOP_TRACKS: 'spotify/top/tracks'
+}
+
+function spotifyAction(type, status, json = {}) {
   return {
-    type: FETCH_SPOTIFY_PROFILE,
+    type: type,
     status: status,
     json: json
   }
 }
 
-export function fetchSpotifyProfile() {
+export function fetchSpotifyData(type, opts = {}) {
   return function(dispatch, getState) {
 
     var profile = getState().spotify_profile;
 
     if (!profile || profile.status == ERROR) {
-      dispatch(spotifyProfileAction(PENDING));
+      dispatch(spotifyAction(type, PENDING));
 
-      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/profile', 
+      return fetch(Settings.AURALCORD_ENDPOINT + SPOTIFY_ACTION_MAPPING[type] + queryString.stringify(opts), 
           { credentials: 'include', 
             headers: {
               'Content-Type': 'application/json'
@@ -37,9 +47,9 @@ export function fetchSpotifyProfile() {
         .then(
           response => {
             if (response.success) {
-              dispatch(spotifyProfileAction(SUCCESS, response.data)); 
+              dispatch(spotifyAction(type, SUCCESS, response.data)); 
             } else {
-              dispatch(spotifyProfileAction(ERROR, response.message));
+              dispatch(spotifyAction(type, ERROR, response.message));
             }
           });
     } else {

@@ -3,6 +3,7 @@ import {
   PENDING,
   ERROR,
   FETCH_SPOTIFY_PROFILE,
+  FETCH_SPOTIFY_TOP_INFO,
 } from '../actions'
 
 function statusAction(state = {isFetching: false, data: {}}, action) {
