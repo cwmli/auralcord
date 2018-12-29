@@ -8,9 +8,9 @@ const AppRoutes = [
     layout: AppComponent.Layouts.FixedLayout
   },
   {
-    path: '/profile',
+    path: '/dashboard',
     isExact: true,
-    component: AppComponent.Profile,
+    component: AppComponent.Dashboard,
     layout: AppComponent.Layouts.DefaultLayout
   }
 ]

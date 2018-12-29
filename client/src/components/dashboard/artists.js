@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchSpotifyData, FETCH_SPOTIFY_TOP_ARTISTS } from '../../App/actions';
+import { fetchSpotifyTopArtists } from '../../App/actions';
 
 function mapStateToProps(state) {
   return {
-    top_artists: state.spotify_top_artists
+    topArtists: state.spotify_top_artists
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUserTopArtists: () => dispatch(fetchSpotifyData(FETCH_SPOTIFY_TOP_ARTISTS))
+    getUserTopArtists: () => dispatch(fetchSpotifyTopArtists())
   };
 }
 
@@ -22,7 +22,15 @@ class ConnectedArtists extends Component {
   }
 
   render() {
-    <div>{JSON.parse(this.props.top_artists)}</div>
+    if (this.props.topArtists && !this.props.topArtists.isFetching) {
+      return (
+        <div>{JSON.stringify(this.props.topArtists)}</div>
+      )
+    } else {
+      return (
+        <div>ARTISTS STAT CARD</div>
+      )
+    }
   }
 }
 

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchSpotifyData, FETCH_SPOTIFY_TOP_TRACKS } from '../../App/actions';
+import { fetchSpotifyTopTracks } from '../../App/actions';
 
 function mapStateToProps(state) {
   return {
-    top_tracks: state.spotify_top_tracks
+    topTracks: state.spotify_top_tracks
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUserTopTracks: () => dispatch(fetchSpotifyData(FETCH_SPOTIFY_TOP_TRACKS))
+    getUserTopTracks: () => dispatch(fetchSpotifyTopTracks())
   };
 }
 
@@ -22,7 +22,15 @@ class ConnectedTracks extends Component {
   }
 
   render() {
-    <div>{JSON.parse(this.props.top_tracks)}</div>
+    if (this.props.topTracks && !this.props.topTracks.isFetching) {
+      return (
+        <div>{JSON.stringify(this.props.topTracks)}</div>
+      )
+    } else {
+      return (
+        <div>TRACKS STAT CARD</div>
+      )
+    }
   }
 }
 

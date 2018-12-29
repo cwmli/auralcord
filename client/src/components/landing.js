@@ -16,7 +16,7 @@ class Landing extends Component {
             <h2 className="fw1 f4 black-80">
               <img className="h1" alt="spotify_logo" src={ `${SpotifyLogo}` } />&nbsp;infographic profile data
             </h2>
-            <a className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-blue white" href={Settings.AURALCORD_ENDPOINT + "signin"}>Sign in with <FontAwesomeIcon icon={faSpotify} /></a>
+            <a className="f6 link dim br2 ph3 pv2 mb2 dib no-underline bg-theme-blue white" href={Settings.AURALCORD_ENDPOINT + "/spotify/signin"}>Sign in with <FontAwesomeIcon icon={faSpotify} /></a>
           </div>
         </div>
         <Particles 
