@@ -7,10 +7,10 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="pa4">
+      <div className="pa4 flex items-start">
         <Profile />
         <Artists />
-        <Tracks />
+        {/* <Tracks /> */}
       </div>
     )
   }

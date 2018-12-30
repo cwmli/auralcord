@@ -25,7 +25,7 @@ class ConnectedProfile extends Component {
   render() {
     if (this.props.profile && !this.props.profile.isFetching) {
       return (
-        <div className="mw5 bg-white pa3 mv3 ba br4 b--black-10">
+        <div className="mw5 bg-white pa3 ma3 ba br4 b--black-10">
           <div className="tc mt3">
             <img src={this.props.profile.data.images[0].url} className="br-100 h3 w3 dib" title="profile_photo" />
             <h1 className="f4 mb1">
