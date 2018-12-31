@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import Loading from '../loaders/loading';
 import { fetchSpotifyProfile } from '../../App/actions';
 
+import Artists from './artists';
+import Tracks from './tracks';
+
 function mapStateToProps(state) {
   return {
-    profile: state.spotify_profile
+    profile: state.spotify_profile,
+    topArtists: state.spotify_top_artists,
+    topTracks: state.spotify_top_tracks
   };
 }
 
@@ -24,24 +29,34 @@ class ConnectedProfile extends Component {
 
   render() {
     if (this.props.profile && !this.props.profile.isFetching) {
+      let topArtist = this.props.topArtists && this.props.topArtists.succeeded ? this.props.topArtists.data.artists[0].name : '-';
+      let topTrack = this.props.topTracks && this.props.topTracks.succeeded ? this.props.topTracks.data.tracks[0].name + ' - ' + this.props.topTracks.data.tracks[0].artists[0].name : '-';
+
       return (
-        <div className="mw5 bg-white pa3 ma3 ba br4 b--black-10">
-          <div className="tc mt3">
+        <div className="pa3 w-100">
+          <a className="flex items-center link dim" href={this.props.profile.data.external_urls.spotify}>
             <img src={this.props.profile.data.images[0].url} className="br-100 h3 w3 dib" title="profile_photo" />
-            <h1 className="f4 mb1">
-              {this.props.profile.data.display_name}
-            </h1>
-            <h6 className="black-20 mv0">({this.props.profile.data.id})</h6>
-            <hr className="mw4 black-40" />
+            <div className="pl3 flex-auto">
+              <h1 className="mv0">{this.props.profile.data.display_name}</h1>
+              <span className="f5 black-40">{this.props.profile.data.id}</span>
+            </div>
+          </a>
+          <dl className="dib mr5">
+            <dd className="f6 f5-ns b ml0">Followers</dd>
+            <dd className="f3 f2-ns b ml0">{this.props.profile.data.followers.total}</dd>
+          </dl>
+          <dl className="dib mr5">
+            <dd className="f6 f5-ns b ml0">Top Artist</dd>
+            <dd className="f3 f2-ns b ml0">{topArtist}</dd>
+          </dl>
+          <dl className="dib mr5">
+            <dd className="f6 f5-ns b ml0">Top Track</dd>
+            <dd className="f3 f2-ns b ml0">{topTrack}</dd>
+          </dl>
+          <div className="pb3">
+            <Artists />
           </div>
-          <p className="lh-copy measure center f6 black-70 mb3">
-            <dl className="lh-title pa4 mt0">
-              <dt className="f6 b">Followers</dt>
-              <dd className="ml0">{this.props.profile.data.followers.total}</dd>
-              <dt className="f6 b mt2">External URL</dt>
-              <dd className="ml0"><a href={this.props.profile.data.external_urls.spotify}>Spotify</a></dd>
-            </dl>
-          </p>
+          <Tracks />
         </div>
       )
     } else {

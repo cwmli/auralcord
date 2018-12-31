@@ -24,34 +24,33 @@ class ConnectedArtists extends Component {
   render() {
     if (this.props.topArtists && !this.props.topArtists.isFetching) {
       return (
-        <div className="mw6 bg-white pa4 ma3 ba br4 b--black-10">
-          <h1 className="ph3">Top Artists</h1>
-          <hr className="mh3 black-40"/>
-          <ul className="pa0">
+        <div className="bg-white">
+          <h2 className="mv0">Your Top Artists</h2>
+          <hr className="bb bw1 b--black-10"/>
+          <div className="flex flex-wrap">
             {this.props.topArtists.data.artists.map((artist, i) => {
               return (
-                <li key={i} className="flex items-center lh-copy pa3 ph0-l bb b--black-10">
-                  <img className="w2 h2 w3-ns h3-ns br-100" src={artist.image.url} />
-                  <div className="pl3 flex-auto">
-                    <span className="f3 db black">{artist.name}</span>
-                    <span className="f6 db white">{
-                      artist.genres.map((genre, i) => {
-                        return (
-                          <div key={i} className={"br-pill ph2 ma1 dib"} style={toMaterialStyle(genre)}>
-                            {genre}
-                          </div>
-                        )
-                      })}</span>
-                  </div>
-                </li>
+                <div className="w-20">
+                  <a key={i} href={artist.external_urls.spotify} className="db link aspect-ratio aspect-ratio--1x1 tc dim" style={{backgroundImage: `url(${artist.image.url})`}}>
+                    <span role="img" aria-label={artist.name} style={{backgroundImage: `url(${artist.image.url})`}} class="bg-center cover aspect-ratio--object">
+                    </span>
+                    <span className="z-999 absolute bottom-1 left-0 pa1 ttu tracked white bg-black">{artist.name}</span>
+                  </a>
+                </div>
               )
             })}
-          </ul>
+          </div>
         </div>
       )
     } else {
       return (
-        <div>ARTISTS STAT CARD</div>
+        <div className="bg-white">
+          <h2 className="mv0">Your Top Artists</h2>
+          <hr className="bb bw1 b--black-10"/>
+          <div className="flex flex-wrap">
+            LOADING
+          </div>
+        </div>
       )
     }
   }
