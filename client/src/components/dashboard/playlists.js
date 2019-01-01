@@ -15,6 +15,11 @@ function mapDispatchToProps(dispatch) {
 
 class ConnectedPlaylists extends Component {
   
+  render() {
+    return (
+      <div></div>
+    )
+  }
 }
 
 const Playlists = connect(mapStateToProps, mapDispatchToProps)(ConnectedPlaylists);
