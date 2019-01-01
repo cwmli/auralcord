@@ -40,6 +40,26 @@
   background-color: #C2C8D7;
 }
 
+.b--theme-red {
+  border-color: #FF355B;
+}
+
+.b--theme-green {
+  border-color: #B7E876;
+}
+
+.b--theme-yellow {
+  border-color: #FFC251;
+}
+
+.b--theme-blue {
+  border-color: #76D4FF;
+}
+
+.b--theme-gray {
+  border-color: #C2C8D7;
+}
+
 .vh-85 {
   height: 85vh;
 }
