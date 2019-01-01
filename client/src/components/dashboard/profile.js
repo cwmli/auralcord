@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Loading from '../loaders/loading';
 import { fetchSpotifyProfile } from '../../App/actions';
 
+import Tabs from '../utils/tabs';
 import Artists from './artists';
 import Tracks from './tracks';
 
@@ -54,9 +55,11 @@ class ConnectedProfile extends Component {
             <dd className="f3 f2-ns b ml0">{topTrack}</dd>
           </dl>
           <div className="pv3">
-            <Artists />
+            <Tabs>
+              <Artists name='Top Artists' />
+              <Tracks name='Top Tracks' />
+            </Tabs>
           </div>
-          <Tracks />
         </div>
       )
     } else {
