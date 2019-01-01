@@ -21,8 +21,10 @@ class Tabs extends Component {
       <div className="flex flex-column">
         <div>
           { children.map((child) => {
+            let activeClass = child.props.name === activeTab ? 'bb bw1 b--theme-yellow' : '';
+
             return (
-              <div className="dib"
+              <div className={"f5 dib mv4 mr3 pb1 b ttu tracked " + activeClass}
                   onClick={() => this.setState({ activeTab: child.props.name })}>
                 {child.props.name}
               </div>
