@@ -53,7 +53,7 @@ class ConnectedProfile extends Component {
             <dd className="f6 f5-ns b ml0">Top Track</dd>
             <dd className="f3 f2-ns b ml0">{topTrack}</dd>
           </dl>
-          <div className="pb3">
+          <div className="pv3">
             <Artists />
           </div>
           <Tracks />

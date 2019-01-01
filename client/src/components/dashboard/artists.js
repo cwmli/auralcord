@@ -26,7 +26,7 @@ class ConnectedArtists extends Component {
       return (
         <div className="bg-white">
           <h2 className="mv0">Your Top Artists</h2>
-          <hr className="bb bw1 b--black-10"/>
+          <hr className="bb bw1 b--black-10 mb3"/>
           <div className="flex flex-wrap">
             {this.props.topArtists.data.artists.map((artist, i) => {
               return (
