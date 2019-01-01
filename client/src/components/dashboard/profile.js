@@ -7,6 +7,7 @@ import { fetchSpotifyProfile } from '../../App/actions';
 import Tabs from '../utils/tabs';
 import Artists from './artists';
 import Tracks from './tracks';
+import Playlists from './playlists';
 
 function mapStateToProps(state) {
   return {
@@ -56,6 +57,7 @@ class ConnectedProfile extends Component {
           </dl>
           <div className="pv3">
             <Tabs>
+              <Playlists name='Playlists' />
               <Artists name='Top Artists' />
               <Tracks name='Top Tracks' />
             </Tabs>
