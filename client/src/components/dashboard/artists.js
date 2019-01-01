@@ -30,7 +30,7 @@ class ConnectedArtists extends Component {
           <div className="flex flex-wrap">
             {this.props.topArtists.data.artists.map((artist, i) => {
               return (
-                <div className="w-20">
+                <div className="w-50 w-20-m w-10-l">
                   <a key={i} href={artist.external_urls.spotify} className="db link aspect-ratio aspect-ratio--1x1 tc dim" style={{backgroundImage: `url(${artist.image.url})`}}>
                     <span role="img" aria-label={artist.name} style={{backgroundImage: `url(${artist.image.url})`}} class="bg-center cover aspect-ratio--object">
                     </span>

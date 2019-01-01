@@ -46,7 +46,10 @@ class ConnectedTracks extends Component {
       )
     } else {
       return (
-        <div>TRACKS STAT CARD</div>
+        <div className="bg-white">
+          <h2 className="mv0">Your Top Tracks</h2>
+          <hr className="bb bw1 b--black-10"/>
+        </div>
       )
     }
   }
