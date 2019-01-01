@@ -57,9 +57,9 @@ class ConnectedProfile extends Component {
           </dl>
           <div className="pv3">
             <Tabs>
+              <Playlists name='Playlists' />
               <Artists name='Top Artists' />
               <Tracks name='Top Tracks' />
-              <Playlists name='Playlists' />
             </Tabs>
           </div>
         </div>
