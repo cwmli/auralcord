@@ -24,8 +24,8 @@ class ConnectedPlaylist extends Component {
       let playlist = this.props.queriedPlaylist.data;
 
       return (
-        <div className="pa4">
-          <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10">
+        <div className="ph4 pt4 vh-85">
+          <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
             <div className="flex items-center pb1">
               <img className="w3 h3 pr3" src={playlist.images[0].url} alt='playlist-image' />
               <dl className="mt2 mb1 lh-copy">
@@ -35,7 +35,7 @@ class ConnectedPlaylist extends Component {
               </dl>
             </div>
             <div className="f6 gray bb b--black-10 bw1 pb3" dangerouslySetInnerHTML={{__html: playlist.description}} />
-            <div className="flex flex-column flex-wrap">
+            <div className="flex flex-column overflow-auto">
             {playlist.tracks.items.map((trackObj, i) => {
               return (
                 <a key={i} href={trackObj.track.external_urls.spotify} className="flex dim items-center link lh-copy pa1 ph0-l bb b--black-10">
