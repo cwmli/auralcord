@@ -44,7 +44,7 @@ function htmlTemplate(reactDom, state) {
       <head>
           <meta charset="utf-8">
           <link href="https://use.fontawesome.com/releases/v5.5.0/css/svg-with-js.css" rel="stylesheet">
-          <link rel="stylesheet" type="text/css" href="index.css">
+          <link rel="stylesheet" type="text/css" href="/index.css">
           <title>AURALCORD</title>
       </head>
       
@@ -58,7 +58,7 @@ function htmlTemplate(reactDom, state) {
             '\\u003c'
           )}
         </script>
-        <script src="bundle.js"></script>
+        <script src="/bundle.js"></script>
       </body>
       </html>
   `;
