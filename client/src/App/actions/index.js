@@ -102,7 +102,7 @@ export function fetchSpotifyTopTracks(params = {}) {
   }
 }
 
-export function fetchSpotifyUserPlaylists(params = {}) {
+export function fetchSpotifyUserPlaylists(playlistId = '', params = {}) {
   return function(dispatch, getState) {
 
     var userPlaylists = getState().spotify_user_playlists;
@@ -110,7 +110,12 @@ export function fetchSpotifyUserPlaylists(params = {}) {
     if (!userPlaylists || userPlaylists.status == ERROR || params.forceUpdate) {
       dispatch(spotifyAction(FETCH_SPOTIFY_USER_PLAYLISTS, PENDING));
 
-      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/playlist' + queryString.stringify(params), 
+      var defaultEndpoint = Settings.AURALCORD_ENDPOINT + 'spotify/playlist';
+      if (playlistId.length) {
+        defaultEndpoint = defaultEndpoint + '/' + playlistId;
+      }
+
+      return fetch(defaultEndpoint + queryString.stringify(params), 
           { credentials: 'include', headers: { 'Content-Type': 'application/json' } }
         ).then(
           response => response.json(),

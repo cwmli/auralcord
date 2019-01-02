@@ -16,7 +16,7 @@ const AppRoutes = [
   {
     path: '/playlist/:id',
     isExact: true,
-    component: AppComponent.Playlists,
+    component: AppComponent.Playlist,
     layout: AppComponent.Layouts.DefaultLayout
   }
 ]

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { fetchSpotifyUserPlaylists } from '../../App/actions';
 
@@ -30,7 +31,7 @@ class ConnectedPlaylists extends Component {
             {this.props.userPlaylists.data.items.map((playlist, i) => {
               return (
                 <div className="w-50 w-20-m w-10-l ph2">
-                  <a key={i} href="#" className="db link tc dim">
+                  <Link key={i} to={'/playlist/' + playlist.id} className="db link tc dim">
                     <div className="aspect-ratio aspect-ratio--1x1">
                       <div className="aspect-ratio--object cover" style={{backgroundImage: `url(${playlist.images[0].url})`}} />
                     </div>
@@ -38,7 +39,7 @@ class ConnectedPlaylists extends Component {
                       <dd className="ml0 black b truncate w-100">{playlist.name}</dd>
                       <dd className="ml0 gray truncate w-100">{playlist.tracks.total} Tracks</dd>
                     </dl>
-                  </a>
+                  </Link>
                 </div>
               )
             })}
