@@ -131,7 +131,7 @@ export function fetchSpotifyUserPlaylists(params = {}) {
 
 export function fetchSpotifyQueriedPlaylist(playlistId, params = {}) {
   return function(dispatch, getState) {
-    var userPlaylists = getState().spotify_user_playlists;
+    var userPlaylists = getState().spotify_queried_playlist;
 
     if (!userPlaylists || userPlaylists.status == ERROR || userPlaylists.id !== playlistId || params.forceUpdate) {
       dispatch(spotifyAction(FETCH_SPOTIFY_QUERIED_PLAYLIST, PENDING));
