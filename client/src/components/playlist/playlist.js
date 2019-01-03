@@ -38,16 +38,16 @@ class ConnectedPlaylist extends Component {
       return (
         <div className="ph4 pt4 vh-85">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
-            <div className="flex items-center pb1">
-              <img className="w3 h3 pr3" src={playlist.images[0].url} alt='playlist-image' />
-              <dl className="mt2 mb1 lh-copy">
+            <div className="db pb1">
+              <img className="dib w3 h3 pr3" src={playlist.images[0].url} alt='playlist-image' />
+              <dl className="mt2 dib mb1 lh-copy">
                 <dd className="ml0 f4 black b truncate w-100">{playlist.name}</dd>
                 <dd className="ml0 f6 gray truncate w-100">{playlist.followers.total} Followers - {playlist.tracks.total} Tracks</dd>
                 <dd className="ml0 f6 gray truncate w-100">by {playlist.owner.display_name}</dd>
               </dl>
             </div>
             <div className="f6 gray bb b--black-10 bw1 pb3" dangerouslySetInnerHTML={{__html: playlist.description}} />
-            <div className="flex flex-column overflow-auto">
+            <div className="overflow-auto">
             {playlist.tracks.items.map((trackObj, i) => {
               return (
                 <a key={i} href={trackObj.track.external_urls.spotify} className="flex dim items-center link lh-copy pa1 ph0-l bb b--black-10">
