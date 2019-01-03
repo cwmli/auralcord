@@ -44,7 +44,7 @@ export function fetchSpotifyProfile() {
             }
           });
     } else {
-      Promise.resolve();
+      return Promise.resolve();
     }
   }
 }
@@ -71,7 +71,7 @@ export function fetchSpotifyTopArtists(params = {}) {
             }
           });
     } else {
-      Promise.resolve();
+      return Promise.resolve();
     }
   }
 }
@@ -98,7 +98,7 @@ export function fetchSpotifyTopTracks(params = {}) {
             }
           });
     } else {
-      Promise.resolve();
+      return Promise.resolve();
     }
   }
 }
@@ -124,7 +124,7 @@ export function fetchSpotifyUserPlaylists(params = {}) {
             }
           });
     } else {
-      Promise.resolve();
+      return Promise.resolve();
     }
   }
 }
@@ -150,7 +150,7 @@ export function fetchSpotifyQueriedPlaylist(playlistId, params = {}) {
             }
           });
     } else {
-      Promise.resolve();
+      return Promise.resolve();
     }
   }
 }

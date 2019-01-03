@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel ./client -d build",
     "build:css": "tachyons ./client/src/css/App.css > ./build/public/index.css --minify",
-    "build:watch": "babel ./client -d build --watch",
+    "build:watch": "babel ./client/server -d build --watch",
     "build:client": "webpack --config ./webpack.config.js/",
     "build:watch:client": "webpack --config ./webpack.config.js/ --watch",
     "build:prod": "npm run build && npm run build:client",
