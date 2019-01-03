@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchSpotifyQueriedPlaylist } from '../../App/actions';
+import md5 from 'md5';
+import { fetchSpotifyQueriedPlaylist, fetchSpotifyTrackFeatures } from '../../App/actions';
 
 function mapStateToProps(state) {
   return {
-    queriedPlaylist: state.spotify_queried_playlist
+    queriedPlaylist: state.spotify_queried_playlist,
+    playlistTrackFeatures: state.spotify_track_features
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPlaylist: (id) => dispatch(fetchSpotifyQueriedPlaylist(id))
+    getPlaylist: (id) => dispatch(fetchSpotifyQueriedPlaylist(id)),
+    getTrackFeatures: (requestId, ids) => dispatch(fetchSpotifyTrackFeatures(requestId, {ids: ids}))
   };
 }
 class ConnectedPlaylist extends Component {
 
   componentDidMount() {
-    this.props.getPlaylist(this.props.match.params.id);
+    this.props.getPlaylist(this.props.match.params.id).then(() => {
+      const queriedPlaylistTracks = this.props.queriedPlaylist.data.tracks;
+      
+      let id = md5(this.props.match.params.id + queriedPlaylistTracks.offset);
+      let queriedPlaylistTrackIds = queriedPlaylistTracks.items.map((trackObj) => {
+        return trackObj.track.id
+      })
+
+      this.props.getTrackFeatures(id, queriedPlaylistTrackIds);
+    });
   }
   
   render() {

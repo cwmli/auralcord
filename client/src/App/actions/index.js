@@ -13,6 +13,7 @@ export const FETCH_SPOTIFY_TOP_ARTISTS = 'FETCH_SPOTIFY_TOP_ARTISTS';
 export const FETCH_SPOTIFY_TOP_TRACKS = 'FETCH_SPOTIFY_TOP_TRACKS';
 export const FETCH_SPOTIFY_USER_PLAYLISTS = 'FETCH_SPOTIFY_USER_PLAYLISTS';
 export const FETCH_SPOTIFY_QUERIED_PLAYLIST = 'FETCH_SPOTIFY_QUERIED_PLAYLIST';
+export const FETCH_SPOTIFY_TRACK_FEATURES = 'FETCH_SPOTIFY_TRACK_FEATURES';
 
 function spotifyAction(type, status, json = {}) {
   return {
@@ -147,6 +148,33 @@ export function fetchSpotifyQueriedPlaylist(playlistId, params = {}) {
               dispatch(spotifyAction(FETCH_SPOTIFY_QUERIED_PLAYLIST, SUCCESS, response.data)); 
             } else {
               dispatch(spotifyAction(FETCH_SPOTIFY_QUERIED_PLAYLIST, ERROR, response.message));
+            }
+          });
+    } else {
+      return Promise.resolve();
+    }
+  }
+}
+
+export function fetchSpotifyTrackFeatures(id, params = { ids: [] }) {
+  return function(dispatch, getState) {
+    var trackFeatures = getState().spotify_track_features;
+
+    if (!trackFeatures || trackFeatures.status == ERROR || trackFeatures.id !== id || params.forceUpdate) {
+      dispatch(spotifyAction(FETCH_SPOTIFY_TRACK_FEATURES, PENDING));
+
+      return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/track-features/?' + queryString.stringify(params), 
+          { credentials: 'include', headers: { 'Content-Type': 'application/json' } }
+        ).then(
+          response => response.json(),
+          error => error
+        ).then(
+          response => {
+            if (response.success) {
+              response.data.id = id; // keep track of tracks id
+              dispatch(spotifyAction(FETCH_SPOTIFY_TRACK_FEATURES, SUCCESS, response.data)); 
+            } else {
+              dispatch(spotifyAction(FETCH_SPOTIFY_TRACK_FEATURES, ERROR, response.message));
             }
           });
     } else {

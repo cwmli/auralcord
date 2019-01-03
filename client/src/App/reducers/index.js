@@ -6,7 +6,8 @@ import {
   FETCH_SPOTIFY_TOP_ARTISTS,
   FETCH_SPOTIFY_TOP_TRACKS,
   FETCH_SPOTIFY_USER_PLAYLISTS,
-  FETCH_SPOTIFY_QUERIED_PLAYLIST
+  FETCH_SPOTIFY_QUERIED_PLAYLIST,
+  FETCH_SPOTIFY_TRACK_FEATURES
 } from '../actions'
 
 function statusAction(state = {isFetching: false, data: {}}, action) {
@@ -84,6 +85,10 @@ function auralcordApp(state = {}, action) {
       return Object.assign({}, state, {
         spotify_queried_playlist: statusActionId(state['spotify_queried_playlist'], action)
       })
+    case FETCH_SPOTIFY_TRACK_FEATURES:
+      return Object.assign({}, state, {
+        spotify_track_features: statusActionId(state['spotify_track_features'], action)
+      }) 
     default:
       return state;
   }
