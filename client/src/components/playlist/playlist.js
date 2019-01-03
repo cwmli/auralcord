@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchSpotifyUserPlaylists } from '../../App/actions';
+import { fetchSpotifyQueriedPlaylist } from '../../App/actions';
 
 function mapStateToProps(state) {
   return {
-    queriedPlaylist: state.spotify_user_playlists
+    queriedPlaylist: state.spotify_queried_playlist
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPlaylist: (id) => dispatch(fetchSpotifyUserPlaylists(id))
+    getPlaylist: (id) => dispatch(fetchSpotifyQueriedPlaylist(id))
   };
 }
 class ConnectedPlaylist extends Component {

@@ -16,7 +16,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 class ConnectedPlaylists extends Component {
-  
+
   componentDidMount() {
     this.props.getUserPlaylists();
   }
