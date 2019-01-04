@@ -5,7 +5,9 @@ import {
   FETCH_SPOTIFY_PROFILE,
   FETCH_SPOTIFY_TOP_ARTISTS,
   FETCH_SPOTIFY_TOP_TRACKS,
-  FETCH_SPOTIFY_USER_PLAYLISTS
+  FETCH_SPOTIFY_USER_PLAYLISTS,
+  FETCH_SPOTIFY_QUERIED_PLAYLIST,
+  FETCH_SPOTIFY_TRACK_FEATURES
 } from '../actions'
 
 function statusAction(state = {isFetching: false, data: {}}, action) {
@@ -33,6 +35,34 @@ function statusAction(state = {isFetching: false, data: {}}, action) {
   }
 }
 
+function statusActionId(state = {isFetching: false, data: {}}, action) {
+  switch(action.status) {
+    case PENDING:
+      return Object.assign({}, state, {
+        succeeded: false,
+        isFetching: true,
+        id: '',
+        data: {}
+      })
+    case SUCCESS:
+      return Object.assign({}, state, {
+        succeeded: true,
+        isFetching: false,
+        id: action.json.id ? action.json.id : '',
+        data: action.json
+      })
+    case ERROR:
+      return Object.assign({}, state, {
+        succeeded: false,
+        isFetching: false,
+        id: '',
+        data: action.json
+      })
+    default:
+      return state;
+  }
+}
+
 function auralcordApp(state = {}, action) {
   switch(action.type) {
     case FETCH_SPOTIFY_PROFILE:
@@ -50,7 +80,15 @@ function auralcordApp(state = {}, action) {
     case FETCH_SPOTIFY_USER_PLAYLISTS:
       return Object.assign({}, state, {
         spotify_user_playlists: statusAction(state['spotify_user_playlists'], action)
-      })    
+      })
+    case FETCH_SPOTIFY_QUERIED_PLAYLIST:
+      return Object.assign({}, state, {
+        spotify_queried_playlist: statusActionId(state['spotify_queried_playlist'], action)
+      })
+    case FETCH_SPOTIFY_TRACK_FEATURES:
+      return Object.assign({}, state, {
+        spotify_track_features: statusActionId(state['spotify_track_features'], action)
+      }) 
     default:
       return state;
   }

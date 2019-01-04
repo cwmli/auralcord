@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel ./client -d build",
     "build:css": "tachyons ./client/src/css/App.css > ./build/public/index.css --minify",
-    "build:watch": "babel ./client -d build --watch",
+    "build:watch": "babel ./client/server -d build --watch",
     "build:client": "webpack --config ./webpack.config.js/",
     "build:watch:client": "webpack --config ./webpack.config.js/ --watch",
     "build:prod": "npm run build && npm run build:client",
@@ -19,6 +19,7 @@
     "@fortawesome/react-fontawesome": "^0.1.3",
     "cross-fetch": "^3.0.0",
     "material-color-hash": "^0.1.6",
+    "md5": "^2.2.1",
     "query-string": "^6.2.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

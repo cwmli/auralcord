@@ -6,6 +6,7 @@ class router extends Component {
     return (
       <Switch>
         {this.props.routes.map((route) => routeBuilder(route))}
+        <Route render={() => {return (<div>NOT FOUND</div>)}} />
       </Switch>)
   }
 }

@@ -12,6 +12,12 @@ const AppRoutes = [
     isExact: true,
     component: AppComponent.Dashboard,
     layout: AppComponent.Layouts.DefaultLayout
+  },
+  {
+    path: '/playlist/:id',
+    isExact: true,
+    component: AppComponent.Playlist,
+    layout: AppComponent.Layouts.DefaultLayout
   }
 ]
 
