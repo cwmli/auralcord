@@ -11,19 +11,20 @@ class Bars extends Component {
   }
 
   draw(chartObj) {
-    console.log(chartObj);
-    d3.select(chartObj.node.current)
-      .selectAll('rect')
+    let chartNode = d3.select(chartObj.node.current);
+    let computedBBox = chartNode.node().getBoundingClientRect();
+
+    chartNode.selectAll('rect')
       .data(chartObj.data)
       .enter()
       .append('rect')
       .attr('x', (d, i) => {
-        return (i * (chartObj.width / chartObj.data.length)).toString() + 'px';
+        return (i * (computedBBox.width / chartObj.data.length)).toString() + 'px';
       })
       .attr('y', (d) => {
-        return (chartObj.height - d).toString() + 'px';
+        return (computedBBox.height - d).toString() + 'px';
       })
-      .attr("width", chartObj.width / chartObj.data.length)
+      .attr("width", computedBBox.width / chartObj.data.length)
       .attr('height', (d) => {
         return d;
       })
