@@ -1,34 +1,48 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 class D3Chart extends Component {
 
   constructor(props) {
     super(props);
 
     this.chart = React.createRef();
-  }
-
-  componentDidMount() {
-    drawChart();
-  }
-
-  componentDidUpdate(prevProps) {
-    drawChart();
+    this.childRefs = [];
   }
 
   drawChart() {
-    // do any modifications to chart node before
-    // performing on children
+    // pass chart object down for children to perform their draws
+    this.childRefs.forEach((ref) => {
+      const { data, width, height, margin } = this.props;
 
-    this.props.children.map((child) => {
-      child.draw(this.chart.current);
-    });
+      ref.draw({
+        node: this.chart, 
+        data: data, 
+        width: width,
+        height: height,
+        margin: margin
+      });
+    })
+  }
+
+  componentDidMount() {
+    this.drawChart();
+  }
+
+  componentDidUpdate(prevProps) {
+    this.drawChart();
   }
 
   render() {
-     return (
-      <svg ref={this.chart} width={this.props.width} height={this.props.height} />
+    // antipattern: hook up child chart components for DOM manip in drawChart()
+    const children = React.Children.map(this.props.children, (child, i) => {
+      this.childRefs[i] = React.createRef();
+      return React.cloneElement(child, { ref: (dom) => this.childRefs[i] = dom });
+    });
+
+    return (
+      <svg ref={this.chart} width={this.props.width} height={this.props.height}>
+        {children}
+      </svg>
     )
   }
 

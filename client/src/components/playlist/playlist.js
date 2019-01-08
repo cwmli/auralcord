@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import md5 from 'md5';
 import { fetchSpotifyQueriedPlaylist, fetchSpotifyTrackFeatures } from '../../App/actions';
 
+import D3Chart from '../charts/chart';
+import Bars from '../charts/bars';
+
 function mapStateToProps(state) {
   return {
     queriedPlaylist: state.spotify_queried_playlist,
@@ -36,7 +39,7 @@ class ConnectedPlaylist extends Component {
       let playlist = this.props.queriedPlaylist.data;
 
       return (
-        <div className="ph4 pt4 vh-85">
+        <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
             <div className="db pb1">
               <img className="dib w3 h3 pr3" src={playlist.images[0].url} alt='playlist-image' />
@@ -60,6 +63,11 @@ class ConnectedPlaylist extends Component {
               )
             })}
             </div>
+          </div>
+          <div className="w-70-ns w-60-m flex flex-column h-100">
+            <D3Chart width={400} height={600} data={[100, 200, 300, 400, 500, 450]}>
+              <Bars />
+            </D3Chart>
           </div>
         </div>
       )

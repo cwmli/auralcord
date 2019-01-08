@@ -6,7 +6,7 @@ import path from "path";
 import React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import auralcordApp from "../src/reducers";
+import auralcordApp from "../src/App/reducers";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import App from '../src/App/App';
