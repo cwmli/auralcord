@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as d3 from 'd3';
 class D3Chart extends Component {
 
   constructor(props) {
@@ -12,14 +13,19 @@ class D3Chart extends Component {
   drawChart() {
     // pass chart object down for children to perform their draws
     this.childRefs.forEach((ref) => {
-      const { data, width, height, margin } = this.props;
+      const { data, margin, xscale, yscale } = this.props;
+
+      let chartNode = d3.select(this.chart.current);
+      let computedBBox = chartNode.node().getBoundingClientRect();
 
       ref.draw({
-        node: this.chart, 
-        data: data, 
-        width: width,
-        height: height,
-        margin: margin
+        node: chartNode, 
+        data: data,
+        width: computedBBox.width,
+        height: computedBBox.height,
+        margin: margin,
+        scale: { x: xscale.range([0, computedBBox.width]),
+                 y: yscale.range([0, computedBBox.height])}
       });
     })
   }
