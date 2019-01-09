@@ -38,7 +38,7 @@ class ConnectedPlaylist extends Component {
     if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data.audio_features;
-
+      console.log(trackFeatures.map((track) => { return [track.id, track.tempo] }));
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
@@ -66,7 +66,7 @@ class ConnectedPlaylist extends Component {
             </div>
           </div>
           <div className="w-70-ns w-60-m flex flex-column h-100">
-            <D3Chart width="100%" height="100%" data={trackFeatures.map((track) => { return track.tempo })}>
+            <D3Chart width="100%" height="100%" data={trackFeatures.map((track) => { return [track.id, track.tempo] })}>
               <Bars />
             </D3Chart>
           </div>

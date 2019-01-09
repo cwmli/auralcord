@@ -2,22 +2,27 @@
 
 .theme-red {
   color: #FF355B;
+  fill: #FF355B;
 }
 
 .theme-green {
   color: #B7E876;
+  fill: #B7E876;
 }
 
 .theme-yellow {
   color: #FFC251;
+  fill: #FFC251;
 }
 
 .theme-blue {
   color: #76D4FF;
+  fill: #76D4FF;
 }
 
 .theme-gray {
   color: #C2C8D7;
+  fill: #C2C8D7;
 }
 
 .bg-theme-red {
