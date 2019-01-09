@@ -10,8 +10,8 @@ class Bars extends Component {
       .data(chartObj.data)
       .enter()
       .append('rect')
-      .attr('x', (_d, i) => {
-        return chartObj.scale.x(i).toString() + 'px';
+      .attr('x', (d) => {
+        return chartObj.scale.x(d[0]).toString() + 'px';
       })
       .attr('y', (d) => {
         return (chartObj.height - chartObj.scale.y(d[1])).toString() + 'px';

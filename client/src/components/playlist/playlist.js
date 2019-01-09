@@ -40,7 +40,7 @@ class ConnectedPlaylist extends Component {
     if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data.audio_features;
-      let trackTempo = trackFeatures.map((track) => { return [track.id, track.tempo] });
+      let trackTempo = trackFeatures.map((track, i) => { return [playlist.tracks.items[i].track.name, track.tempo] });
 
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
@@ -74,7 +74,7 @@ class ConnectedPlaylist extends Component {
               height="100%"
               xscale={
                 d3.scaleBand()
-                  .domain(d3.range(trackTempo.length))}
+                  .domain(playlist.tracks.items.map((trackObj) => {return trackObj.track.name}))}
               yscale={
                 d3.scaleLinear()
                   .domain([0, d3.max(trackTempo, (d) => {return d[1];})])}
