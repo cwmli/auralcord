@@ -10,28 +10,35 @@ class D3Chart extends Component {
     this.childRefs = [];
   }
 
-  drawChart() {
+  drawChart(initialDraw = false) {
+    const { data, margin, xscale, yscale } = this.props;
+
+    let chartNode = d3.select(this.chart.current);
+    let computedBBox = chartNode.node().getBoundingClientRect();
+    let computedHeight = computedBBox.height - margin.left - margin.right;
+    let computedWidth = computedBBox.width - margin.top - margin.bottom;
+
+    if (initialDraw) {
+      chartNode = chartNode.append('g')
+                  .attr('transform', 'translate(' + margin.left + ',' +  margin.top + ')');
+    }
     // pass chart object down for children to perform their draws
     this.childRefs.forEach((ref) => {
-      const { data, margin, xscale, yscale } = this.props;
-
-      let chartNode = d3.select(this.chart.current);
-      let computedBBox = chartNode.node().getBoundingClientRect();
 
       ref.draw({
         node: chartNode, 
         data: data,
-        width: computedBBox.width,
-        height: computedBBox.height,
+        width: computedWidth,
+        height: computedHeight,
         margin: margin,
-        scale: { x: xscale.range([0, computedBBox.width]),
-                 y: yscale.range([0, computedBBox.height])}
+        scale: { x: xscale.range([0, computedWidth]),
+                 y: yscale.range([0, computedHeight])}
       });
     })
   }
 
   componentDidMount() {
-    this.drawChart();
+    this.drawChart(true);
   }
 
   componentDidUpdate(prevProps) {
