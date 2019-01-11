@@ -15,8 +15,8 @@ class D3Chart extends Component {
 
     let chartNode = d3.select(this.chart.current);
     let computedBBox = chartNode.node().getBoundingClientRect();
-    let computedHeight = computedBBox.height - margin.left - margin.right;
-    let computedWidth = computedBBox.width - margin.top - margin.bottom;
+    let computedHeight = computedBBox.height - margin.top - margin.bottom;
+    let computedWidth = computedBBox.width - margin.right - margin.left;
 
     if (initialDraw) {
       chartNode = chartNode.append('g')

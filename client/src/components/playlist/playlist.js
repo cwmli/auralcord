@@ -72,17 +72,18 @@ class ConnectedPlaylist extends Component {
             <D3Chart 
               width="100%"
               height="100%"
-              margin={{top: 10, right: 10, bottom: 10, left: 10}}
+              margin={{top: 10, right: 10, bottom: 200, left: 50}}
               xscale={
                 d3.scaleBand()
                   .domain(playlist.tracks.items.map((trackObj) => {return trackObj.track.name}))
                   .padding(.1)}
               yscale={
                 d3.scaleLinear()
-                  .domain([0, d3.max(trackTempo, (d) => {return d[1];})])}
+                  .domain([d3.max(trackTempo, (d) => {return d[1];}), 0])}
               data={trackTempo}>
               <Bars />
-              <Axis placement='top' />
+              <Axis placement='bottom' rotatedText={true}/>
+              <Axis placement='left' />
             </D3Chart>
           </div>
         </div>

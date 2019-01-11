@@ -8,26 +8,31 @@ export const LEFT = 'left';
 
 class Axis extends Component {
 
-  getAxis(placement, xscale, yscale) {
+  getAxis(selection, placement, chartObj) {
     switch(placement) {
       case TOP:
-        return d3.axisTop().scale(xscale);
+        return selection.call(d3.axisTop().scale(chartObj.scale.x));
       case RIGHT:
-        return d3.axisRight().scale(yscale);
+        return selection.call(d3.axisRight().scale(chartObj.scale.y))
+                        .attr('transform', 'translate(' + chartObj.width + ', 0)');
       case BOTTOM:
-        return d3.axisBottom().scale(xscale);
+        return selection.call(d3.axisBottom().scale(chartObj.scale.x))
+                        .attr('transform', 'translate(0,' +  chartObj.height + ')')
+                        .selectAll("text")
+                        .attr("y", 0)
+                        .attr("x", 9)
+                        .attr("dy", ".35em")
+                        .attr("transform", "rotate(90)")
+                        .style("text-anchor", "start");
       case LEFT:
-        return d3.axisLeft().scale(yscale);
-      default:
-        return d3.axisBottom().scale(xscale);
+        return selection.call(d3.axisLeft().scale(chartObj.scale.y));
     }
   }
 
   draw(chartObj) {
 
     chartObj.node.append('g')
-             .attr('transform', 'translate(0,' +  chartObj.height + ')')
-             .call(this.getAxis(this.props.placement, chartObj.scale.x, chartObj.scale.y));
+                 .call(this.getAxis, this.props.placement, chartObj);
   }
 
   render() {

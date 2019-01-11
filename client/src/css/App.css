@@ -1,4 +1,5 @@
 @import "tachyons";
+@import "./charts.css";
 
 .theme-red {
   color: #FF355B;

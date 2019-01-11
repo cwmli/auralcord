@@ -1,0 +1,7 @@
+.bar:hover {
+  fill: #FFC251;
+}
+
+.bar {
+  transition: fill .15s ease;
+}

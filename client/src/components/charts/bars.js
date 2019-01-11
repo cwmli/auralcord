@@ -14,13 +14,13 @@ class Bars extends Component {
         return chartObj.scale.x(d[0]).toString() + 'px';
       })
       .attr('y', (d) => {
-        return (chartObj.height - chartObj.scale.y(d[1])).toString() + 'px';
+        return chartObj.scale.y(d[1]).toString() + 'px';
       })
       .attr('width', chartObj.scale.x.bandwidth())
       .attr('height', (d) => {
-        return chartObj.scale.y(d[1]);
+        return chartObj.height - chartObj.scale.y(d[1]);
       })
-      .attr('class', 'theme-gray');
+      .attr('class', 'theme-gray bar');
   }
 
   render() {
