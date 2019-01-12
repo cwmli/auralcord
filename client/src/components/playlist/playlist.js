@@ -39,8 +39,8 @@ class ConnectedPlaylist extends Component {
   render() {
     if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
       let playlist = this.props.queriedPlaylist.data;
-      let trackFeatures = this.props.playlistTrackFeatures.data.audio_features;
-      let trackTempo = trackFeatures.map((track, i) => { return [playlist.tracks.items[i].track.name, track.tempo] });
+      let trackFeatures = this.props.playlistTrackFeatures.data;
+      let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [playlist.tracks.items[i].track.name, tempo] });
 
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
