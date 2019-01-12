@@ -11,12 +11,15 @@ class Axis extends Component {
   getAxis(selection, placement, chartObj) {
     switch(placement) {
       case TOP:
-        return selection.call(d3.axisTop().scale(chartObj.scale.x));
+        return selection.call(d3.axisTop().scale(chartObj.scale.x))
+                        .attr('class', 'top--axis');
       case RIGHT:
         return selection.call(d3.axisRight().scale(chartObj.scale.y))
+                        .attr('class', 'right--axis')
                         .attr('transform', 'translate(' + chartObj.width + ', 0)');
       case BOTTOM:
         return selection.call(d3.axisBottom().scale(chartObj.scale.x))
+                        .attr('class', 'bottom--axis')
                         .attr('transform', 'translate(0,' +  chartObj.height + ')')
                         .selectAll("text")
                         .attr("y", 0)
@@ -25,14 +28,20 @@ class Axis extends Component {
                         .attr("transform", "rotate(90)")
                         .style("text-anchor", "start");
       case LEFT:
-        return selection.call(d3.axisLeft().scale(chartObj.scale.y));
+        return selection.call(d3.axisLeft().scale(chartObj.scale.y))
+                        .attr('class', 'left--axis');
     }
   }
 
   draw(chartObj) {
 
-    chartObj.node.append('g')
-                 .call(this.getAxis, this.props.placement, chartObj);
+    let axis = chartObj.node.select('.' + this.props.placement + '--axis');
+    if (axis.empty()) {
+      chartObj.node.append('g')
+                   .call(this.getAxis, this.props.placement, chartObj);
+    } else {
+      axis.call(this.getAxis, this.props.placement, chartObj);
+    }
   }
 
   render() {

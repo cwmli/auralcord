@@ -6,21 +6,28 @@ class Bars extends Component {
 
   draw(chartObj) {
 
-    chartObj.node.selectAll('rect')
-      .data(chartObj.data)
-      .enter()
-      .append('rect')
-      .attr('x', (d) => {
-        return chartObj.scale.x(d[0]).toString() + 'px';
-      })
-      .attr('y', (d) => {
-        return chartObj.scale.y(d[1]).toString() + 'px';
-      })
-      .attr('width', chartObj.scale.x.bandwidth())
-      .attr('height', (d) => {
-        return chartObj.height - chartObj.scale.y(d[1]);
-      })
-      .attr('class', 'theme-gray bar');
+    function createBars(selection) {
+      selection.attr('x', (d) => {
+                 return chartObj.scale.x(d[0]).toString() + 'px';
+               })
+               .attr('y', (d) => {
+                 return chartObj.scale.y(d[1]).toString() + 'px';
+               })
+               .attr('width', chartObj.scale.x.bandwidth())
+               .attr('height', (d) => {
+                 return chartObj.height - chartObj.scale.y(d[1]);
+               })
+               .attr('class', 'theme-gray bar');
+    }
+
+    let bars = chartObj.node.selectAll('.bar');
+
+    bars.data(chartObj.data)
+        .enter()
+        .append('rect')
+        .call(createBars);
+
+    bars.call(createBars);  
   }
 
   render() {

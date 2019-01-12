@@ -8,37 +8,66 @@ class D3Chart extends Component {
 
     this.chart = React.createRef();
     this.childRefs = [];
+
+    this.zoomed = this.zoomed.bind(this);
+    this.drawChart = this.drawChart.bind(this);
   }
 
-  drawChart(initialDraw = false) {
+  zoomed() {
+    let xt = this.state.xscale.range([0, this.state.computedWidth].map(d => d3.event.transform.applyX(d)));
+    this.setState({xscale: xt});
+  }
+
+  drawChart() {
+    const { margin } = this.props;
+
+    // pass chart object down for children to perform their draws
+    if (this.state && this.state.node) {
+      // this.state.node.selectAll("*").remove();
+
+      this.childRefs.forEach((ref) => {
+
+        ref.draw({
+          node: this.state.node, 
+          data: this.state.data,
+          width: this.state.computedWidth,
+          height: this.state.computedHeight,
+          margin: margin,
+          scale: { x: this.state.xscale,
+                  y: this.state.yscale }
+        });
+      })
+    }
+  }
+
+  componentDidMount() {
     const { data, margin, xscale, yscale } = this.props;
 
     let chartNode = d3.select(this.chart.current);
     let computedBBox = chartNode.node().getBoundingClientRect();
     let computedHeight = computedBBox.height - margin.top - margin.bottom;
     let computedWidth = computedBBox.width - margin.right - margin.left;
+    let zoom = d3.zoom()
+                 .scaleExtent([1, 32])
+                 .translateExtent([[0, 0], [computedWidth, computedHeight]])
+                 .extent([[0, 0], [computedWidth, computedHeight]])
+                 .on("zoom", this.zoomed);
 
-    if (initialDraw) {
-      chartNode = chartNode.append('g')
-                  .attr('transform', 'translate(' + margin.left + ',' +  margin.top + ')');
-    }
-    // pass chart object down for children to perform their draws
-    this.childRefs.forEach((ref) => {
+    chartNode = chartNode.append('g')
+                         .attr('transform', 'translate(' + margin.left + ',' +  margin.top + ')')
+                         .call(zoom);
 
-      ref.draw({
-        node: chartNode, 
-        data: data,
-        width: computedWidth,
-        height: computedHeight,
-        margin: margin,
-        scale: { x: xscale.range([0, computedWidth]),
-                 y: yscale.range([0, computedHeight])}
-      });
-    })
-  }
+    this.setState({
+      node: chartNode,
+      data: data,
+      xscale: xscale.range([0, computedWidth]),
+      yscale: yscale.range([0, computedHeight]),
+      computedBBox: computedBBox,
+      computedHeight: computedHeight,
+      computedWidth: computedWidth
+    });
 
-  componentDidMount() {
-    this.drawChart(true);
+    this.drawChart();
   }
 
   componentDidUpdate(prevProps) {
