@@ -13,33 +13,6 @@ class D3Chart extends Component {
     this.drawChart = this.drawChart.bind(this);
   }
 
-  zoomed() {
-    let xt = this.state.xscale.range([0, this.state.computedWidth].map(d => d3.event.transform.applyX(d)));
-    this.setState({xscale: xt});
-  }
-
-  drawChart() {
-    const { margin } = this.props;
-
-    // pass chart object down for children to perform their draws
-    if (this.state && this.state.node) {
-      // this.state.node.selectAll("*").remove();
-
-      this.childRefs.forEach((ref) => {
-
-        ref.draw({
-          node: this.state.node, 
-          data: this.state.data,
-          width: this.state.computedWidth,
-          height: this.state.computedHeight,
-          margin: margin,
-          scale: { x: this.state.xscale,
-                  y: this.state.yscale }
-        });
-      })
-    }
-  }
-
   componentDidMount() {
     const { data, margin, xscale, yscale } = this.props;
 
@@ -72,6 +45,35 @@ class D3Chart extends Component {
 
   componentDidUpdate(prevProps) {
     this.drawChart();
+  }
+
+  chartObj() {
+    return {
+      node: this.state.node, 
+      data: this.state.data,
+      width: this.state.computedWidth,
+      height: this.state.computedHeight,
+      margin: this.props.margin,
+      scale: { x: this.state.xscale,
+               y: this.state.yscale }
+    }
+  }
+
+  zoomed() {
+    let xt = this.props.zoommethod(this.state.xscale, this.chartObj());
+    this.setState({xscale: xt});
+  }
+
+  drawChart() {
+    // pass chart object down for children to perform their draws
+    if (this.state && this.state.node) {
+      // this.state.node.selectAll("*").remove();
+
+      this.childRefs.forEach((ref) => {
+
+        ref.draw(this.chartObj());
+      })
+    }
   }
 
   render() {

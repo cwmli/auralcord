@@ -80,6 +80,7 @@ class ConnectedPlaylist extends Component {
               yscale={
                 d3.scaleLinear()
                   .domain([d3.max(trackTempo, (d) => {return d[1];}), 0])}
+              zoommethod={(scale, chartObj) => {return scale.range([0, chartObj.width].map(d => d3.event.transform.applyX(d)))}}
               data={trackTempo}>
               <Bars />
               <Axis placement='bottom' rotatedText={true}/>
