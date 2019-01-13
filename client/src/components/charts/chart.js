@@ -67,8 +67,6 @@ class D3Chart extends Component {
   drawChart() {
     // pass chart object down for children to perform their draws
     if (this.state && this.state.node) {
-      // this.state.node.selectAll("*").remove();
-
       this.childRefs.forEach((ref) => {
 
         ref.draw(this.chartObj());
@@ -93,10 +91,13 @@ class D3Chart extends Component {
 }
 
 D3Chart.propTypes = {
+  xscale: PropTypes.object.isRequired,
+  yscale: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
-  margin: PropTypes.number,
-  data: PropTypes.array
+  margin: PropTypes.object,
+  zoommethod: PropTypes.func,
 }
 
 export default D3Chart;

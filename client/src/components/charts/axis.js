@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 
 export const TOP = 'top';
@@ -47,6 +48,11 @@ class Axis extends Component {
   render() {
     return (null);
   }
+}
+
+Axis.PropTypes = {
+  placement: PropTypes.string.isRequired,
+  rotatedText: PropTypes.bool,
 }
 
 export default Axis;

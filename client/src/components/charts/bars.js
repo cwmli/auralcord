@@ -27,12 +27,20 @@ class Bars extends Component {
         .append('rect')
         .call(createBars);
 
-    bars.call(createBars);  
+    bars.call(createBars);
+
+    if (this.props.decorator) {
+      bars.call(this.props.decorator);
+    }
   }
 
   render() {
     return (null);
   }
+}
+
+Bars.PropTypes = {
+  decorator: PropTypes.func,
 }
 
 export default Bars;
