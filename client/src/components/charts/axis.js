@@ -12,14 +12,14 @@ class Axis extends Component {
   getAxis(selection, placement, chartObj) {
     switch(placement) {
       case TOP:
-        return selection.call(d3.axisTop().scale(chartObj.scale.x))
+        return selection.call(d3.axisTop().scale(chartObj.scale.x).tickSize(0))
                         .attr('class', 'top--axis');
       case RIGHT:
-        return selection.call(d3.axisRight().scale(chartObj.scale.y))
+        return selection.call(d3.axisRight().scale(chartObj.scale.y).tickSize(0))
                         .attr('class', 'right--axis')
                         .attr('transform', 'translate(' + chartObj.width + ', 0)');
       case BOTTOM:
-        return selection.call(d3.axisBottom().scale(chartObj.scale.x))
+        return selection.call(d3.axisBottom().scale(chartObj.scale.x).tickSize(0))
                         .attr('class', 'bottom--axis')
                         .attr('transform', 'translate(0,' +  chartObj.height + ')')
                         .selectAll("text")
@@ -29,7 +29,7 @@ class Axis extends Component {
                         .attr("transform", "rotate(90)")
                         .style("text-anchor", "start");
       case LEFT:
-        return selection.call(d3.axisLeft().scale(chartObj.scale.y))
+        return selection.call(d3.axisLeft().scale(chartObj.scale.y).tickSize(0))
                         .attr('class', 'left--axis');
     }
   }

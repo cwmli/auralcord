@@ -3,5 +3,35 @@
 }
 
 .bar {
-  transition: fill .15s ease;
+  transition: fill .10s ease-out;
 }
+
+.line {
+  stroke: #76D4FF
+}
+
+.bottom--axis > path, .left--axis > path {
+  stroke: none;
+}
+
+.theme-red-stroke {
+  stroke: #FF355B;
+  fill: #FF355B;
+}
+
+.theme-green-stroke {
+  stroke: #B7E876;
+}
+
+.theme-yellow-stroke {
+  stroke: #FFC251;
+}
+
+.theme-blue-stroke {
+  stroke: #76D4FF;
+}
+
+.theme-gray-stroke {
+  stroke: #C2C8D7;
+}
+

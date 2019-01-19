@@ -21,7 +21,7 @@ class D3Chart extends Component {
     let computedHeight = computedBBox.height - margin.top - margin.bottom;
     let computedWidth = computedBBox.width - margin.right - margin.left;
     let zoom = d3.zoom()
-                 .scaleExtent([1, 32])
+                 .scaleExtent([1, 8])
                  .translateExtent([[0, 0], [computedWidth, computedHeight]])
                  .extent([[0, 0], [computedWidth, computedHeight]])
                  .on("zoom", this.zoomed);
