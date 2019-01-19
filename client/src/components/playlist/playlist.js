@@ -6,7 +6,11 @@ import { fetchSpotifyQueriedPlaylist, fetchSpotifyTrackFeatures } from '../../Ap
 import * as d3 from 'd3';
 import D3Chart from '../charts/chart';
 import Bars from '../charts/bars';
+import Lines from '../charts/lines';
 import Axis from '../charts/axis';
+import horizontalLine from './decorators/hline';
+
+import { movingAverage } from '../utils/math';
 
 function mapStateToProps(state) {
   return {
@@ -41,7 +45,9 @@ class ConnectedPlaylist extends Component {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data;
       let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [playlist.tracks.items[i].track.name, tempo] });
+      let trackTempoRA = (movingAverage(trackFeatures.tempo)).map((ma, i) => { return [playlist.tracks.items[i].track.name, ma]});
 
+      console.log(trackTempoRA);
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
@@ -69,23 +75,31 @@ class ConnectedPlaylist extends Component {
             </div>
           </div>
           <div className="w-70-ns w-60-m flex flex-column h-100">
-            <D3Chart 
-              width="100%"
-              height="100%"
-              margin={{top: 10, right: 10, bottom: 200, left: 50}}
-              xscale={
-                d3.scaleBand()
-                  .domain(playlist.tracks.items.map((trackObj) => {return trackObj.track.name}))
-                  .padding(.1)}
-              yscale={
-                d3.scaleLinear()
-                  .domain([d3.max(trackTempo, (d) => {return d[1];}), 0])}
-              zoommethod={(scale, chartObj) => {return scale.range([0, chartObj.width].map(d => d3.event.transform.applyX(d)))}}
-              data={trackTempo}>
-              <Bars />
-              <Axis placement='bottom' rotatedText={true}/>
-              <Axis placement='left' />
-            </D3Chart>
+            <div className="pa3 h-75">
+              <dl className="mt2 dib mb1 lh-copy h-100">
+                <dd className="ml0 f4 black b w-100">Tempo/BPM</dd>
+                <dd className="ml0 h-100">
+                  <D3Chart 
+                    width="100%"
+                    height="100%"
+                    margin={{top: 10, right: 10, bottom: 200, left: 50}}
+                    xscale={
+                      d3.scaleBand()
+                        .domain(playlist.tracks.items.map((trackObj) => {return trackObj.track.name}))
+                        .padding(.25)}
+                    yscale={
+                      d3.scaleLinear()
+                        .domain([d3.max(trackTempo, (d) => {return d[1];}), 0])}
+                    zoommethod={(scale, chartObj) => {return scale.range([0, chartObj.width].map(d => d3.event.transform.applyX(d)))}}
+                    data={trackTempo}>
+                    <Bars decorator={horizontalLine} />
+                    <Lines data={trackTempoRA} />
+                    <Axis placement='bottom' rotatedText={true}/>
+                    <Axis placement='left' />
+                  </D3Chart>
+                </dd>
+              </dl>
+            </div>
           </div>
         </div>
       )

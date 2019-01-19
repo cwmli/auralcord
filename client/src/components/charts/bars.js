@@ -6,7 +6,7 @@ class Bars extends Component {
 
   draw(chartObj) {
 
-    function createBars(selection) {
+    function createBars(selection, decorator) {
       selection.attr('x', (d) => {
                  return chartObj.scale.x(d[0]).toString() + 'px';
                })
@@ -18,6 +18,10 @@ class Bars extends Component {
                  return chartObj.height - chartObj.scale.y(d[1]);
                })
                .attr('class', 'theme-gray bar');
+
+      if (decorator) {
+        selection.call(decorator, chartObj);
+      }
     }
 
     let bars = chartObj.node.selectAll('.bar');
@@ -25,14 +29,18 @@ class Bars extends Component {
     bars.data(chartObj.data)
         .enter()
         .append('rect')
-        .call(createBars);
+        .call(createBars, this.props.decorator);
 
-    bars.call(createBars);  
+    bars.call(createBars, this.props.decorator);
   }
 
   render() {
     return (null);
   }
+}
+
+Bars.PropTypes = {
+  decorator: PropTypes.func,
 }
 
 export default Bars;
