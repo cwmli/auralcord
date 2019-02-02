@@ -44,10 +44,10 @@ class ConnectedPlaylist extends Component {
     if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data;
-      let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [playlist.tracks.items[i].track.name, tempo] });
-      let trackTempoRA = (movingAverage(trackFeatures.tempo, 10)).map((ma, i) => { return [playlist.tracks.items[i].track.name, ma]});
+      let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [trackFeatures.id[i], tempo] });
+      let trackTempoRA = (movingAverage(trackFeatures.tempo, 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
 
-      console.log(trackTempoRA);
+      console.log(trackFeatures);
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
@@ -63,7 +63,7 @@ class ConnectedPlaylist extends Component {
             <div className="overflow-auto">
             {playlist.tracks.items.map((trackObj, i) => {
               return (
-                <a key={i} href={trackObj.track.external_urls.spotify} className="flex dim items-center link lh-copy pa1 ph0-l bb b--black-10">
+                <a key={i} href={trackObj.track.external_urls.spotify} id={trackObj.track.id} className="flex dim items-center link lh-copy pa1 ph0-l bb b--black-10">
                   <img className="w2 h2 br3" src={trackObj.track.album.images[0].url} alt={trackObj.track.album.name + '-avatar'} />
                   <div className="pl3 flex-auto">
                     <span className="f6 b db black">{trackObj.track.name}</span>
@@ -85,7 +85,7 @@ class ConnectedPlaylist extends Component {
                     margin={{top: 10, right: 10, bottom: 200, left: 50}}
                     xscale={
                       d3.scaleBand()
-                        .domain(playlist.tracks.items.map((trackObj) => {return trackObj.track.name}))
+                        .domain(trackFeatures.id)
                         .padding(.25)}
                     yscale={
                       d3.scaleLinear()

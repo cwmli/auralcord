@@ -9,17 +9,29 @@ export const LEFT = 'left';
 
 class Axis extends Component {
 
-  getAxis(selection, placement, chartObj) {
+  getAxis(selection, placement, labelMapping, chartObj) {
+
     switch(placement) {
       case TOP:
-        return selection.call(d3.axisTop().scale(chartObj.scale.x).tickSize(0))
+        return selection.call(
+                          d3.axisTop()
+                            .scale(chartObj.scale.x)
+                            .tickSize(0)
+                            .tickFormat((d) => { return labelMapping ? labelMapping[d] : d }))
                         .attr('class', 'top--axis');
       case RIGHT:
-        return selection.call(d3.axisRight().scale(chartObj.scale.y).tickSize(0))
+        return selection.call(
+                          d3.axisRight()
+                            .scale(chartObj.scale.y)
+                            .tickSize(0))
                         .attr('class', 'right--axis')
                         .attr('transform', 'translate(' + chartObj.width + ', 0)');
       case BOTTOM:
-        return selection.call(d3.axisBottom().scale(chartObj.scale.x).tickSize(0))
+        return selection.call(
+                          d3.axisBottom()
+                            .scale(chartObj.scale.x)
+                            .tickSize(0)
+                            .tickFormat((d) => { return labelMapping ? labelMapping[d] : d }))
                         .attr('class', 'bottom--axis')
                         .attr('transform', 'translate(0,' +  chartObj.height + ')')
                         .selectAll("text")
@@ -29,7 +41,10 @@ class Axis extends Component {
                         .attr("transform", "rotate(90)")
                         .style("text-anchor", "start");
       case LEFT:
-        return selection.call(d3.axisLeft().scale(chartObj.scale.y).tickSize(0))
+        return selection.call(
+                          d3.axisLeft()
+                            .scale(chartObj.scale.y)
+                            .tickSize(0))
                         .attr('class', 'left--axis');
     }
   }
@@ -39,9 +54,9 @@ class Axis extends Component {
     let axis = chartObj.node.select('.' + this.props.placement + '--axis');
     if (axis.empty()) {
       chartObj.node.append('g')
-                   .call(this.getAxis, this.props.placement, chartObj);
+                   .call(this.getAxis, this.props.placement, this.props.labelMapping, chartObj);
     } else {
-      axis.call(this.getAxis, this.props.placement, chartObj);
+      axis.call(this.getAxis, this.props.placement, this.props.labelMapping, chartObj);
     }
   }
 
@@ -52,6 +67,7 @@ class Axis extends Component {
 
 Axis.PropTypes = {
   placement: PropTypes.string.isRequired,
+  labelMapping: PropTypes.objectOf(PropTypes.string),
   rotatedText: PropTypes.bool,
 }
 
