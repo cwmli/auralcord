@@ -65,7 +65,7 @@ class ConnectedPlaylist extends Component {
             <div className="overflow-auto">
             {playlist.tracks.items.map((trackObj, i) => {
               return (
-                <a key={i} href={trackObj.track.external_urls.spotify} id={trackObj.track.id} className="flex dim items-center link lh-copy pa1 ph0-l bb b--black-10">
+                <a key={i} href={trackObj.track.external_urls.spotify} id={trackObj.track.id} className="flex dim items-center link lh-copy pa1 bb b--black-10">
                   <img className="w2 h2 br3" src={trackObj.track.album.images[0].url} alt={trackObj.track.album.name + '-avatar'} />
                   <div className="pl3 flex-auto">
                     <span className="f6 b db black">{trackObj.track.name}</span>

@@ -1,6 +1,6 @@
 export default function horizontalLine (selection, chartObj) {
 
-  selection.on('mouseenter', (d, _i) => {
+  selection.on('mouseenter', (d) => {
     chartObj.node.append('line')
                  .attr('class', 'hline theme-yellow-stroke')
                  .attr('stroke-linecap', 'round')
@@ -17,9 +17,17 @@ export default function horizontalLine (selection, chartObj) {
 
     let textbbox = text.node().getBBox();
     text.attr('transform', 'translate(' + (chartObj.width - textbbox.width) + ',' + chartObj.margin.top + ')')
+
+    // DOM Stuff
+    let playlistItem = document.getElementById(d[0]);
+    playlistItem.scrollIntoView({ behavior: 'smooth' });
+    playlistItem.classList.add('bg-theme-yellow');
   });
 
-  selection.on('mouseleave', () => {
+  selection.on('mouseleave', (d) => {
+    let playlistItem = document.getElementById(d[0]);
+    playlistItem.classList.remove('bg-theme-yellow');
+
     chartObj.node.selectAll('.hline').remove();
     chartObj.node.selectAll('.hline-text').remove();
   });
