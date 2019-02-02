@@ -45,7 +45,7 @@ class ConnectedPlaylist extends Component {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data;
       let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [playlist.tracks.items[i].track.name, tempo] });
-      let trackTempoRA = (movingAverage(trackFeatures.tempo)).map((ma, i) => { return [playlist.tracks.items[i].track.name, ma]});
+      let trackTempoRA = (movingAverage(trackFeatures.tempo, 10)).map((ma, i) => { return [playlist.tracks.items[i].track.name, ma]});
 
       console.log(trackTempoRA);
       return (

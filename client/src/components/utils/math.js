@@ -1,12 +1,16 @@
 
-export function movingAverage(dataset) {
+export function movingAverage(dataset, n) {
   
-  let runningAvg = [];
-  let runningTotal = 0;
+  var runningAvg = [];
+  var runningTotal = [];
 
   dataset.forEach((d, i) => {
-    runningTotal += d;
-    runningAvg.push(runningTotal / (i + 1));
+    runningTotal.push(d);
+    if (i % n > 0) {
+      runningTotal.shift();
+    }
+
+    runningAvg.push(runningTotal.reduce((t, i) => {return t + i}) / runningTotal.length);
   });
 
   return runningAvg;
