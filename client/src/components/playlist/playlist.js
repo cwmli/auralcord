@@ -46,8 +46,10 @@ class ConnectedPlaylist extends Component {
       let trackFeatures = this.props.playlistTrackFeatures.data;
       let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [trackFeatures.id[i], tempo] });
       let trackTempoRA = (movingAverage(trackFeatures.tempo, 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
+      let labelMapping = trackFeatures.id.reduce(
+        (mapping, id, i) => { mapping[id] = playlist.tracks.items[i].track.name; return mapping; }, {});
 
-      console.log(trackFeatures);
+      console.log(labelMapping);
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
@@ -94,7 +96,10 @@ class ConnectedPlaylist extends Component {
                     data={trackTempo}>
                     <Bars decorator={horizontalLine} />
                     <Lines data={trackTempoRA} />
-                    <Axis placement='bottom' rotatedText={true}/>
+                    <Axis 
+                      placement='bottom'
+                      labelMapping={labelMapping}
+                      rotatedText={true}/>
                     <Axis placement='left' />
                   </D3Chart>
                 </dd>
