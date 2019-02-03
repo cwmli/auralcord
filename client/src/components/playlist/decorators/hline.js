@@ -13,7 +13,7 @@ export default function horizontalLine (selection, chartObj) {
     
     let text = chartObj.node.append('text');
     text.attr('class', 'hline-text')
-        .text(Math.round(d[1]) + ' BPM');
+        .text(d[1].toFixed(2));
 
     let textbbox = text.node().getBBox();
     text.attr('transform', 'translate(' + (chartObj.width - textbbox.width) + ',' + chartObj.margin.top + ')')

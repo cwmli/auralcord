@@ -3,14 +3,8 @@ import { connect } from 'react-redux';
 import md5 from 'md5';
 import { fetchSpotifyQueriedPlaylist, fetchSpotifyTrackFeatures } from '../../App/actions';
 
-import * as d3 from 'd3';
-import D3Chart from '../charts/chart';
-import Bars from '../charts/bars';
-import Lines from '../charts/lines';
-import Axis from '../charts/axis';
-import horizontalLine from './decorators/hline';
-
 import { movingAverage } from '../utils/math';
+import FeatureChart from './featurecharts';
 
 function mapStateToProps(state) {
   return {
@@ -44,12 +38,27 @@ class ConnectedPlaylist extends Component {
     if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data;
-      let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [trackFeatures.id[i], tempo] });
-      let trackTempoRA = (movingAverage(trackFeatures.tempo, 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
       let labelMapping = trackFeatures.id.reduce(
         (mapping, id, i) => { mapping[id] = playlist.tracks.items[i].track.name; return mapping; }, {});
+      let featureCharts = [];
 
-      console.log(labelMapping);
+      for (var category in trackFeatures) {
+        if (!['danceability', 'energy', 'tempo', ].includes(category)) { continue; }
+        console.log(trackFeatures[category]);
+        let trackCategory = trackFeatures[category].map((tempo, i) => { return [trackFeatures.id[i], tempo] });
+        let trackCategoryRA = (movingAverage(trackFeatures[category], 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
+        
+        featureCharts.push(
+          <FeatureChart 
+            title={category}
+            xDomain={trackFeatures.id}
+            chartData={trackCategory}
+            lineData={trackCategoryRA}
+            labelMapping={labelMapping}
+          />
+        );
+      }
+
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
@@ -65,7 +74,9 @@ class ConnectedPlaylist extends Component {
             <div className="overflow-auto">
             {playlist.tracks.items.map((trackObj, i) => {
               return (
-                <a key={i} href={trackObj.track.external_urls.spotify} id={trackObj.track.id} className="flex dim items-center link lh-copy pa1 bb b--black-10">
+                <a key={i} 
+                   href={trackObj.track.external_urls.spotify} id={trackObj.track.id} 
+                   className="flex dim items-center link lh-copy pa1 bb b--black-10">
                   <img className="w2 h2 br3" src={trackObj.track.album.images[0].url} alt={trackObj.track.album.name + '-avatar'} />
                   <div className="pl3 flex-auto">
                     <span className="f6 b db black">{trackObj.track.name}</span>
@@ -76,35 +87,8 @@ class ConnectedPlaylist extends Component {
             })}
             </div>
           </div>
-          <div className="w-70-ns w-60-m flex flex-column h-100">
-            <div className="pa3 h-75">
-              <dl className="mt2 dib mb1 lh-copy h-100">
-                <dd className="ml0 f4 black b w-100">Tempo/BPM</dd>
-                <dd className="ml0 h-100">
-                  <D3Chart 
-                    width="100%"
-                    height="100%"
-                    margin={{top: 10, right: 10, bottom: 200, left: 50}}
-                    xscale={
-                      d3.scaleBand()
-                        .domain(trackFeatures.id)
-                        .padding(.25)}
-                    yscale={
-                      d3.scaleLinear()
-                        .domain([d3.max(trackTempo, (d) => {return d[1];}), 0])}
-                    zoommethod={(scale, chartObj) => {return scale.range([0, chartObj.width].map(d => d3.event.transform.applyX(d)))}}
-                    data={trackTempo}>
-                    <Bars decorator={horizontalLine} />
-                    <Lines data={trackTempoRA} />
-                    <Axis 
-                      placement='bottom'
-                      labelMapping={labelMapping}
-                      rotatedText={true}/>
-                    <Axis placement='left' />
-                  </D3Chart>
-                </dd>
-              </dl>
-            </div>
+          <div className="w-70-ns w-60-m flex flex-column h-100 overflow-auto">
+            {featureCharts}
           </div>
         </div>
       )
