@@ -21,6 +21,11 @@ function mapDispatchToProps(dispatch) {
 }
 class ConnectedPlaylist extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { isLoaded: false };
+  }
+
   componentDidMount() {
     this.props.getPlaylist(this.props.match.params.id).then(() => {
       const queriedPlaylistTracks = this.props.queriedPlaylist.data.tracks;
@@ -30,12 +35,14 @@ class ConnectedPlaylist extends Component {
         return trackObj.track.id
       })
 
-      this.props.getTrackFeatures(id, queriedPlaylistTrackIds);
+      this.props.getTrackFeatures(id, queriedPlaylistTrackIds).then(() => {
+        this.setState({ isLoaded: true });
+      });
     });
   }
   
   render() {
-    if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
+    if (this.state.isLoaded) {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data;
       let labelMapping = trackFeatures.id.reduce(
@@ -44,13 +51,12 @@ class ConnectedPlaylist extends Component {
 
       for (var category in trackFeatures) {
         if (!['danceability', 'energy', 'tempo', ].includes(category)) { continue; }
-        console.log(trackFeatures[category]);
         let trackCategory = trackFeatures[category].map((tempo, i) => { return [trackFeatures.id[i], tempo] });
         let trackCategoryRA = (movingAverage(trackFeatures[category], 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
         
         featureCharts.push(
           <FeatureChart 
-            title={category}
+            title={category.toUpperCase()}
             xDomain={trackFeatures.id}
             chartData={trackCategory}
             lineData={trackCategoryRA}

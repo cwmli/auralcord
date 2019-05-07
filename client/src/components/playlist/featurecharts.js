@@ -21,7 +21,7 @@ class FeatureChart extends Component {
 
     return (
       <div className="pa3 min-h-100">
-        <dl className="mt2 dib mb1 lh-copy h-100">
+        <dl className="mt2 dib mb1 lh-copy w-100 h-100">
           <dd className="ml0 f4 black b w-100">{title}</dd>
           <dd className="ml0 h-100">
             <D3Chart 

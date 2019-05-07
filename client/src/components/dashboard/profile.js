@@ -37,7 +37,7 @@ class ConnectedProfile extends Component {
       return (
         <div className="pa3 w-100">
           <a className="flex items-center link dim" href={this.props.profile.data.external_urls.spotify}>
-            <img src={this.props.profile.data.images[0].url} className="br-100 h3 w3 dib" title="profile_photo" />
+            <img src={this.props.profile.data.images[0] ? this.props.profile.data.images[0].url : "no_profile_img"} className="br-100 h3 w3 dib" title="profile_photo" />
             <div className="pl3 flex-auto">
               <h1 className="mv0">{this.props.profile.data.display_name}</h1>
               <span className="f5 black-40">{this.props.profile.data.id}</span>
