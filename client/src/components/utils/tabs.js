@@ -18,8 +18,8 @@ class Tabs extends Component {
     } = this;
 
     return (
-      <div className="flex flex-column">
-        <div>
+      <div className="flex flex-column h-100">
+        <div className={this.props.tabClasses}>
           { children.map((child) => {
             let activeClass = child.props.name === activeTab ? 'bb bw1 b--theme-yellow' : '';
 
@@ -31,7 +31,7 @@ class Tabs extends Component {
             )
           })}
         </div>
-        <div>
+        <div className="flex-auto">
           { children.map((child) => {
             if (child.props.name !== activeTab) return null;
             return child;

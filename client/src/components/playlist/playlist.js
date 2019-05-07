@@ -3,14 +3,9 @@ import { connect } from 'react-redux';
 import md5 from 'md5';
 import { fetchSpotifyQueriedPlaylist, fetchSpotifyTrackFeatures } from '../../App/actions';
 
-import * as d3 from 'd3';
-import D3Chart from '../charts/chart';
-import Bars from '../charts/bars';
-import Lines from '../charts/lines';
-import Axis from '../charts/axis';
-import horizontalLine from './decorators/hline';
-
-import { movingAverage } from '../utils/math';
+import { movingAverage, average } from '../utils/math';
+import Tabs from '../utils/tabs';
+import FeatureChart from './featurecharts';
 
 function mapStateToProps(state) {
   return {
@@ -27,6 +22,11 @@ function mapDispatchToProps(dispatch) {
 }
 class ConnectedPlaylist extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { isLoaded: false };
+  }
+
   componentDidMount() {
     this.props.getPlaylist(this.props.match.params.id).then(() => {
       const queriedPlaylistTracks = this.props.queriedPlaylist.data.tracks;
@@ -36,18 +36,38 @@ class ConnectedPlaylist extends Component {
         return trackObj.track.id
       })
 
-      this.props.getTrackFeatures(id, queriedPlaylistTrackIds);
+      this.props.getTrackFeatures(id, queriedPlaylistTrackIds).then(() => {
+        this.setState({ isLoaded: true });
+      });
     });
   }
   
   render() {
-    if (this.props.playlistTrackFeatures && !this.props.playlistTrackFeatures.isFetching) {
+    if (this.state.isLoaded) {
       let playlist = this.props.queriedPlaylist.data;
       let trackFeatures = this.props.playlistTrackFeatures.data;
-      let trackTempo = trackFeatures.tempo.map((tempo, i) => { return [playlist.tracks.items[i].track.name, tempo] });
-      let trackTempoRA = (movingAverage(trackFeatures.tempo)).map((ma, i) => { return [playlist.tracks.items[i].track.name, ma]});
+      let labelMapping = trackFeatures.id.reduce(
+        (mapping, id, i) => { mapping[id] = playlist.tracks.items[i].track.name; return mapping; }, {});
+      let featureCharts = [];
+      let averageStats = []
 
-      console.log(trackTempoRA);
+      for (var category in trackFeatures) {
+        if (!['danceability', 'valence', 'energy', 'tempo', ].includes(category)) { continue; }
+        let trackCategory = trackFeatures[category].map((tempo, i) => { return [trackFeatures.id[i], tempo] });
+        let trackCategoryRA = (movingAverage(trackFeatures[category], 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
+        
+        featureCharts.push(
+          <FeatureChart 
+            name={category.toUpperCase()}
+            // title={category.toUpperCase()}
+            xDomain={trackFeatures.id}
+            chartData={trackCategory}
+            lineData={trackCategoryRA}
+            labelMapping={labelMapping}
+          />
+        );
+      }
+
       return (
         <div className="ph4 pt4 vh-85 flex items-start">
           <div className="w-30-ns w-40-m flex flex-column pr3 br b--black-10 h-100">
@@ -63,7 +83,9 @@ class ConnectedPlaylist extends Component {
             <div className="overflow-auto">
             {playlist.tracks.items.map((trackObj, i) => {
               return (
-                <a key={i} href={trackObj.track.external_urls.spotify} className="flex dim items-center link lh-copy pa1 ph0-l bb b--black-10">
+                <a key={i} 
+                   href={trackObj.track.external_urls.spotify} id={trackObj.track.id} 
+                   className="flex dim items-center link lh-copy pa1 bb b--black-10">
                   <img className="w2 h2 br3" src={trackObj.track.album.images[0].url} alt={trackObj.track.album.name + '-avatar'} />
                   <div className="pl3 flex-auto">
                     <span className="f6 b db black">{trackObj.track.name}</span>
@@ -74,32 +96,31 @@ class ConnectedPlaylist extends Component {
             })}
             </div>
           </div>
-          <div className="w-70-ns w-60-m flex flex-column h-100">
-            <div className="pa3 h-75">
-              <dl className="mt2 dib mb1 lh-copy h-100">
-                <dd className="ml0 f4 black b w-100">Tempo/BPM</dd>
-                <dd className="ml0 h-100">
-                  <D3Chart 
-                    width="100%"
-                    height="100%"
-                    margin={{top: 10, right: 10, bottom: 200, left: 50}}
-                    xscale={
-                      d3.scaleBand()
-                        .domain(playlist.tracks.items.map((trackObj) => {return trackObj.track.name}))
-                        .padding(.25)}
-                    yscale={
-                      d3.scaleLinear()
-                        .domain([d3.max(trackTempo, (d) => {return d[1];}), 0])}
-                    zoommethod={(scale, chartObj) => {return scale.range([0, chartObj.width].map(d => d3.event.transform.applyX(d)))}}
-                    data={trackTempo}>
-                    <Bars decorator={horizontalLine} />
-                    <Lines data={trackTempoRA} />
-                    <Axis placement='bottom' rotatedText={true}/>
-                    <Axis placement='left' />
-                  </D3Chart>
-                </dd>
-              </dl>
+          <div className="w-70-ns w-60-m flex flex-column h-100 overflow-auto">
+            <div className="pa3">
+              <h3 className="f6 ttu tracked">Average Track Stats</h3>
+              <div className="cf">
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Tempo</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['tempo']) } BPM</dd>
+                </dl>
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Energy</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['energy']) }</dd>
+                </dl>
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Danceability</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['danceability']) }</dd>
+                </dl>
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Valence</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['valence']) }</dd>
+                </dl>
+              </div>
             </div>
+            <Tabs tabClasses="ph3">
+            {featureCharts}
+            </Tabs>
           </div>
         </div>
       )

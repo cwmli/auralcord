@@ -160,7 +160,7 @@ export function fetchSpotifyTrackFeatures(id, params = { ids: [] }) {
   return function(dispatch, getState) {
     var trackFeatures = getState().spotify_track_features;
 
-    if (!trackFeatures || trackFeatures.status == ERROR || trackFeatures.id !== id || params.forceUpdate) {
+    if (!trackFeatures || trackFeatures.status == ERROR || trackFeatures.md5id !== id || params.forceUpdate) {
       dispatch(spotifyAction(FETCH_SPOTIFY_TRACK_FEATURES, PENDING));
 
       return fetch(Settings.AURALCORD_ENDPOINT + 'spotify/track-features/?' + queryString.stringify(params), 
@@ -171,7 +171,7 @@ export function fetchSpotifyTrackFeatures(id, params = { ids: [] }) {
         ).then(
           response => {
             if (response.success) {
-              response.data.id = id; // keep track of tracks id
+              response.data.md5id = id; // keep track of tracks id
               dispatch(spotifyAction(FETCH_SPOTIFY_TRACK_FEATURES, SUCCESS, response.data)); 
             } else {
               dispatch(spotifyAction(FETCH_SPOTIFY_TRACK_FEATURES, ERROR, response.message));

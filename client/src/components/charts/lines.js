@@ -17,6 +17,7 @@ class Lines extends Component {
       path = chartObj.node.append('path')
                           .datum(data)
                           .style('fill', 'none')
+                          .style('stroke-width', 2)
                           .attr('class', 'line');
     }
 
