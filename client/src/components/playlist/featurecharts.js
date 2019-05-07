@@ -20,10 +20,10 @@ class FeatureChart extends Component {
     } = this.props
 
     return (
-      <div className="pa3 min-h-100">
-        <dl className="mt2 dib mb1 lh-copy w-100 h-100">
-          <dd className="ml0 f4 black b w-100">{title}</dd>
-          <dd className="ml0 h-100">
+      <div className="pa3 min-h-100 flex">
+        <dl className="flex flex-auto flex-column mt2 dib mb1 lh-copy">
+          <dd className="ml0 f6 black b w-100 ttu tracked">{title}</dd>
+          <dd className="flex-auto ml0">
             <D3Chart 
               width="100%"
               height="100%"

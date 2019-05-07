@@ -5,7 +5,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="pa4 flex items-start">
+      <div className="flex-auto">
         <Profile />
       </div>
     )

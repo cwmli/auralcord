@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import md5 from 'md5';
 import { fetchSpotifyQueriedPlaylist, fetchSpotifyTrackFeatures } from '../../App/actions';
 
-import { movingAverage } from '../utils/math';
+import { movingAverage, average } from '../utils/math';
+import Tabs from '../utils/tabs';
 import FeatureChart from './featurecharts';
 
 function mapStateToProps(state) {
@@ -48,15 +49,17 @@ class ConnectedPlaylist extends Component {
       let labelMapping = trackFeatures.id.reduce(
         (mapping, id, i) => { mapping[id] = playlist.tracks.items[i].track.name; return mapping; }, {});
       let featureCharts = [];
+      let averageStats = []
 
       for (var category in trackFeatures) {
-        if (!['danceability', 'energy', 'tempo', ].includes(category)) { continue; }
+        if (!['danceability', 'valence', 'energy', 'tempo', ].includes(category)) { continue; }
         let trackCategory = trackFeatures[category].map((tempo, i) => { return [trackFeatures.id[i], tempo] });
         let trackCategoryRA = (movingAverage(trackFeatures[category], 10)).map((ma, i) => { return [trackFeatures.id[i], ma]});
         
         featureCharts.push(
           <FeatureChart 
-            title={category.toUpperCase()}
+            name={category.toUpperCase()}
+            // title={category.toUpperCase()}
             xDomain={trackFeatures.id}
             chartData={trackCategory}
             lineData={trackCategoryRA}
@@ -94,7 +97,30 @@ class ConnectedPlaylist extends Component {
             </div>
           </div>
           <div className="w-70-ns w-60-m flex flex-column h-100 overflow-auto">
+            <div className="pa3">
+              <h3 className="f6 ttu tracked">Average Track Stats</h3>
+              <div className="cf">
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Tempo</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['tempo']) } BPM</dd>
+                </dl>
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Energy</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['energy']) }</dd>
+                </dl>
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Danceability</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['danceability']) }</dd>
+                </dl>
+                <dl className="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+                  <dd className="f6 fw4 ml0">Valence</dd>
+                  <dd className="f3 fw6 ml0">{ average(trackFeatures['valence']) }</dd>
+                </dl>
+              </div>
+            </div>
+            <Tabs tabClasses="ph3">
             {featureCharts}
+            </Tabs>
           </div>
         </div>
       )

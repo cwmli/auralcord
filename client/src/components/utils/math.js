@@ -15,3 +15,16 @@ export function movingAverage(dataset, n) {
 
   return runningAvg;
 }
+
+export function average(dataset) {
+
+  var total = 0;
+
+  dataset.forEach((d) => {
+    total += d;
+  })
+
+  var res = total / dataset.length;
+
+  return res.toFixed(2);
+}
