@@ -1,4 +1,4 @@
-## Spotlist
-Work in progress infographic for Spotify profiles
+## Auralcord
+Work in progress song discovery web app for Spotify
 
 Backend repo: https://github.com/cwmli/auralcord-backend
