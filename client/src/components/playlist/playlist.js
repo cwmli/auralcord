@@ -49,7 +49,6 @@ class ConnectedPlaylist extends Component {
       let labelMapping = trackFeatures.id.reduce(
         (mapping, id, i) => { mapping[id] = playlist.tracks.items[i].track.name; return mapping; }, {});
       let featureCharts = [];
-      let averageStats = []
 
       for (var category in trackFeatures) {
         if (!['danceability', 'valence', 'energy', 'tempo', ].includes(category)) { continue; }
