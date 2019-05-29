@@ -25,17 +25,17 @@ class ConnectedPlaylists extends Component {
     if (this.props.userPlaylists && !this.props.userPlaylists.isFetching) {
       return (
         <div className="bg-white">
-          <h2 className="mv0">Your Playlists</h2>
-          <hr className="bb bw1 b--black-10 mb3"/>
+          <h2 className="mv0">Playlists</h2>
+          <hr className="bb b--black-10 mb3"/>
           <div className="flex flex-wrap">
             {this.props.userPlaylists.data.items.map((playlist, i) => {
               return (
-                <div className="w-50 w-20-m w-10-l ph2">
-                  <Link key={i} to={'/playlist/' + playlist.id} className="db link tc dim">
+                <div className="w-50 w-30-m w-10-l ph2">
+                  <Link key={i} to={'/playlist/' + playlist.id} className="db link tc dim shadow-4 br3">
                     <div className="aspect-ratio aspect-ratio--1x1">
-                      <div className="aspect-ratio--object cover" style={{backgroundImage: `url(${playlist.images[0].url})`}} />
+                      <div className="aspect-ratio--object cover br3" style={{backgroundImage: `url(${playlist.images[0].url})`}} />
                     </div>
-                    <dl className="mt2 f6 lh-copy">
+                    <dl className="pv2 mt0 mb2 f6 lh-copy">
                       <dd className="ml0 black b truncate w-100">{playlist.name}</dd>
                       <dd className="ml0 gray truncate w-100">{playlist.tracks.total} Tracks</dd>
                     </dl>
