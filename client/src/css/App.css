@@ -69,3 +69,15 @@
 .vh-85 {
   height: 85vh;
 }
+
+.b--gradient-1 {
+  background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+}
+
+.b--gradient-2 {
+  background: linear-gradient(45deg, #00bcd4 30%, #1de9b6 90%);
+}
+
+.b--gradient-3 {
+  background: linear-gradient(45deg, #00e676 30%, #b2ff59 90%);
+}

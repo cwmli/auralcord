@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import Loading from '../loaders/loading';
 import { fetchSpotifyProfile } from '../../App/actions';
 
-import Tabs from '../utils/tabs';
+// import Tabs from '../utils/tabs';
 // import Artists from './artists';
 // import Tracks from './tracks';
 import Playlists from './playlists';
+import Seeder from '../seeders/seeder';
 
 function mapStateToProps(state) {
   return {
@@ -44,6 +45,9 @@ class ConnectedProfile extends Component {
             <h1 className="black mt2 mb0">{this.props.profile.data.display_name}</h1>
             <span className="f5 black-40">{this.props.profile.data.followers.total} Followers</span>
           </a>
+          <div className="pv3">
+            <Seeder />
+          </div>
           {/* <dl className="dib mr5">
             <dd className="f6 f5-ns b ml0">Followers</dd>
             <dd className="f3 f2-ns b ml0">{}</dd>
