@@ -58,10 +58,24 @@ class Seeder extends Component {
           </a>
         );
       case 2:
-        let choices = ['My playlists', 'My recently played', 'My top songs', 'My top artists'];
-        let extendedChoices = ['Specific songs', 'Specific genres', 'Specific artists'];
+        let choices = {playlists: 'My playlists', recently_played: 'My recently played', top_songs: 'My top songs', top_artists: 'My top artists'};
+        let extendedChoices = {songs: 'Specific songs', genres: 'Specific genres', artists: 'Specific artists'};
 
         choices = this.state.moreContent ? extendedChoices : choices;
+        
+        let selection = [];
+        Object.entries(choices).forEach(([k, v], i) => {
+          const element = 
+          <a className={`${this.state.flowOptions.includes(k) ? "bg-near-white" : ""} 
+              f5 lh-copy mh1 link pointer dim br4 ph3 pv2 mb2 dib near-black shadow-4`}
+            key={i}
+            name={k}
+            onClick={(e) => this.handleFlowOption(e)}>
+            {v}
+          </a>;
+
+          selection.push(element);
+        }, this);
 
         return (
           <div>
@@ -73,19 +87,7 @@ class Seeder extends Component {
                   Back
                 </a>
               }
-              {
-                choices.map((t, i) => {
-                  return (
-                    <a className={`${this.state.flowOptions.includes(t) ? "bg-near-white" : ""} 
-                        f5 lh-copy mh1 link pointer dim br4 ph3 pv2 mb2 dib near-black shadow-4`}
-                       key={i}
-                       name={t}
-                       onClick={(e) => this.handleFlowOption(e)}>
-                      {t}
-                    </a>
-                  );
-                })
-              }
+              { selection }
               { !this.state.moreContent && 
                 <a className="f5 lh-copy mh1 b--gradient-2 link pointer dim br4 ph3 pv2 mb2 dib white shadow-4"
                     onClick={() => this.setState({moreContent: true})}>
