@@ -94,6 +94,10 @@ class Seeder extends Component {
                     More
                 </a>
               }
+              <a className="f5 lh-copy mh1 b--gradient-1 link pointer dim br4 ph3 pv2 mb2 dib white shadow-4"
+                    onClick={() => this.setState({moreContent: true})}>
+                Next
+              </a>
             </div>
           </div>
         );
